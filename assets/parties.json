@@ -1,0 +1,3014 @@
+{
+"espece": "Brachypelma hamorii",
+"parties": [
+{
+"id": "carapace",
+"nom": "Carapace",
+"terme": "Prosoma, bouclier dorsal",
+"groupe": "exosquelette",
+"texte": "Le bouclier de la tête et du thorax. La fossette au centre, la fovéa, ancre le muscle qui actionne l'estomac.",
+"mat": "cuticule",
+"centre": [
+-0.0001,
+0.7714,
+0.3701
+],
+"mini": [
+-0.5961,
+0.5482,
+-0.2806
+],
+"maxi": [
+0.5969,
+1.1228,
+1.02
+],
+"triangles": 32448,
+"fourrure_longueur": 0.042
+},
+{
+"id": "sternum",
+"nom": "Sternum",
+"terme": "Plaque ventrale",
+"groupe": "exosquelette",
+"texte": "La plaque du ventre, entre les hanches des huit pattes. C'est le plancher du corps.",
+"mat": "cuticule",
+"centre": [
+-0.0,
+0.535,
+0.23
+],
+"mini": [
+-0.3594,
+0.513,
+-0.16
+],
+"maxi": [
+0.3594,
+0.557,
+0.62
+],
+"triangles": 1760,
+"fourrure_longueur": 0.05
+},
+{
+"id": "labium",
+"nom": "Labium",
+"terme": "Lèvre inférieure",
+"groupe": "bouche",
+"texte": "La lèvre basse, juste sous la bouche. Elle retient le liquide de la proie, qui remonte ensuite vers le pharynx.",
+"mat": "cuticule",
+"centre": [
+-0.0,
+0.55,
+0.67
+],
+"mini": [
+-0.0745,
+0.522,
+0.5914
+],
+"maxi": [
+0.0745,
+0.578,
+0.7486
+],
+"triangles": 616,
+"fourrure_longueur": 0
+},
+{
+"id": "maxilles",
+"nom": "Maxilles",
+"terme": "Pièces buccales",
+"groupe": "bouche",
+"texte": "Deux lames bordées de soies. Elles filtrent la bouillie de proie : seuls les liquides passent dans la bouche.",
+"mat": "cuticule",
+"centre": [
+0.0,
+0.5523,
+0.6953
+],
+"mini": [
+-0.2282,
+0.5059,
+0.508
+],
+"maxi": [
+0.2282,
+0.6041,
+0.8689
+],
+"triangles": 784,
+"fourrure_longueur": 0
+},
+{
+"id": "yeux",
+"nom": "Huit yeux",
+"terme": "Ocelles",
+"groupe": "tete",
+"texte": "Huit petits yeux simples, serrés sur une butte. Elle distingue surtout l'ombre et la lumière : son vrai sens, c'est le toucher.",
+"mat": "oeil",
+"centre": [
+-0.0,
+1.0277,
+0.8688
+],
+"mini": [
+-0.0928,
+0.9882,
+0.8214
+],
+"maxi": [
+0.0928,
+1.0542,
+0.9255
+],
+"triangles": 3456,
+"fourrure_longueur": 0
+},
+{
+"id": "coxa_G1",
+"nom": "Coxa, patte 1 gauche",
+"terme": "Coxa",
+"groupe": "patte1",
+"texte": "La hanche. Elle pivote dans le corps et abrite les muscles les plus puissants de la patte.",
+"mat": "cuticule",
+"centre": [
+0.37,
+0.5743,
+0.7317
+],
+"mini": [
+0.2135,
+0.4405,
+0.5584
+],
+"maxi": [
+0.518,
+0.7105,
+0.9007
+],
+"triangles": 1440,
+"fourrure_longueur": 0.05
+},
+{
+"id": "trochanter_G1",
+"nom": "Trochanter, patte 1 gauche",
+"terme": "Trochanter",
+"groupe": "patte1",
+"texte": "Un petit anneau articulé, la charnière entre la hanche et la cuisse.",
+"mat": "cuticule",
+"centre": [
+0.4705,
+0.5793,
+0.9288
+],
+"mini": [
+0.3505,
+0.463,
+0.8252
+],
+"maxi": [
+0.5881,
+0.6939,
+1.0306
+],
+"triangles": 1440,
+"fourrure_longueur": 0.05
+},
+{
+"id": "femur_G1",
+"nom": "Fémur, patte 1 gauche",
+"terme": "Fémur",
+"groupe": "patte1",
+"texte": "La cuisse, le plus long segment. Sans muscle extenseur au genou, c'est la pression du sang qui déplie la patte.",
+"mat": "cuticule",
+"centre": [
+0.648,
+1.0625,
+1.3578
+],
+"mini": [
+0.4275,
+0.5638,
+0.949
+],
+"maxi": [
+0.8583,
+1.5402,
+1.7576
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "patelle_G1",
+"nom": "Patelle, patte 1 gauche",
+"terme": "Patelle",
+"groupe": "patte1",
+"texte": "Le fameux genou orange de cette mygale. Une articulation purement hydraulique, comme un petit vérin.",
+"mat": "cuticule",
+"centre": [
+0.8803,
+1.5175,
+1.9694
+],
+"mini": [
+0.7281,
+1.4153,
+1.7017
+],
+"maxi": [
+1.0295,
+1.6186,
+2.2371
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "tibia_G1",
+"nom": "Tibia, patte 1 gauche",
+"terme": "Tibia",
+"groupe": "patte1",
+"texte": "Couvert de soies sensorielles, les trichobothries. Elles captent le moindre souffle d'air.",
+"mat": "cuticule",
+"centre": [
+1.0679,
+1.3032,
+2.574
+],
+"mini": [
+0.9029,
+1.0227,
+2.1887
+],
+"maxi": [
+1.2214,
+1.5771,
+2.9592
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "metatarse_G1",
+"nom": "Métatarse, patte 1 gauche",
+"terme": "Métatarse",
+"groupe": "patte1",
+"texte": "L'avant-dernier segment. Ses organes en fente mesurent la tension du squelette : elle sent les vibrations du sol.",
+"mat": "cuticule",
+"centre": [
+1.2288,
+0.686,
+3.1848
+],
+"mini": [
+1.122,
+0.2879,
+2.9021
+],
+"maxi": [
+1.3267,
+1.084,
+3.4604
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "tarse_G1",
+"nom": "Tarse, patte 1 gauche",
+"terme": "Tarse",
+"groupe": "patte1",
+"texte": "Le pied. Une brosse de soies, la scopula, et deux griffes lui permettent de grimper sur du verre.",
+"mat": "cuticule",
+"centre": [
+1.3458,
+0.1314,
+3.7693
+],
+"mini": [
+1.247,
+-0.0633,
+3.4187
+],
+"maxi": [
+1.417,
+0.346,
+4.0379
+],
+"triangles": 1728,
+"fourrure_longueur": 0.05
+},
+{
+"id": "muscle_G1",
+"nom": "Muscles, patte 1 gauche",
+"terme": "Muscles fléchisseurs",
+"groupe": "muscles",
+"texte": "Ces muscles replient la patte. Pour la déplier, l'araignée pousse son sang dedans. À sa mort, les pattes se recroquevillent : la pression a disparu.",
+"mat": "muscle",
+"centre": [
+0.8519,
+0.8433,
+2.0486
+],
+"mini": [
+0.2658,
+0.0637,
+0.5947
+],
+"maxi": [
+1.3795,
+1.5665,
+3.8782
+],
+"triangles": 2352,
+"fourrure_longueur": 0
+},
+{
+"id": "coxa_G2",
+"nom": "Coxa, patte 2 gauche",
+"terme": "Coxa",
+"groupe": "patte2",
+"texte": "La hanche. Elle pivote dans le corps et abrite les muscles les plus puissants de la patte.",
+"mat": "cuticule",
+"centre": [
+0.4341,
+0.5743,
+0.3754
+],
+"mini": [
+0.2614,
+0.4405,
+0.2204
+],
+"maxi": [
+0.6026,
+0.7105,
+0.5219
+],
+"triangles": 1440,
+"fourrure_longueur": 0.05
+},
+{
+"id": "trochanter_G2",
+"nom": "Trochanter, patte 2 gauche",
+"terme": "Trochanter",
+"groupe": "patte2",
+"texte": "Un petit anneau articulé, la charnière entre la hanche et la cuisse.",
+"mat": "cuticule",
+"centre": [
+0.6318,
+0.5793,
+0.4746
+],
+"mini": [
+0.5266,
+0.463,
+0.3559
+],
+"maxi": [
+0.7352,
+0.6939,
+0.5906
+],
+"triangles": 1440,
+"fourrure_longueur": 0.05
+},
+{
+"id": "femur_G2",
+"nom": "Fémur, patte 2 gauche",
+"terme": "Fémur",
+"groupe": "patte2",
+"texte": "La cuisse, le plus long segment. Sans muscle extenseur au genou, c'est la pression du sang qui déplie la patte.",
+"mat": "cuticule",
+"centre": [
+0.9836,
+1.052,
+0.6749
+],
+"mini": [
+0.6423,
+0.5647,
+0.4377
+],
+"maxi": [
+1.3156,
+1.5184,
+0.9021
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "patelle_G2",
+"nom": "Patelle, patte 2 gauche",
+"terme": "Patelle",
+"groupe": "patte2",
+"texte": "Le fameux genou orange de cette mygale. Une articulation purement hydraulique, comme un petit vérin.",
+"mat": "cuticule",
+"centre": [
+1.4772,
+1.4958,
+0.9696
+],
+"mini": [
+1.2418,
+1.3937,
+0.7837
+],
+"maxi": [
+1.711,
+1.5967,
+1.1528
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "tibia_G2",
+"nom": "Tibia, patte 2 gauche",
+"terme": "Tibia",
+"groupe": "patte2",
+"texte": "Couvert de soies sensorielles, les trichobothries. Elles captent le moindre souffle d'air.",
+"mat": "cuticule",
+"centre": [
+1.9538,
+1.2762,
+1.2809
+],
+"mini": [
+1.6454,
+0.9937,
+1.0447
+],
+"maxi": [
+2.2555,
+1.5521,
+1.5072
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "metatarse_G2",
+"nom": "Métatarse, patte 2 gauche",
+"terme": "Métatarse",
+"groupe": "patte2",
+"texte": "L'avant-dernier segment. Ses organes en fente mesurent la tension du squelette : elle sent les vibrations du sol.",
+"mat": "cuticule",
+"centre": [
+2.401,
+0.6672,
+1.5917
+],
+"mini": [
+2.188,
+0.2828,
+1.4216
+],
+"maxi": [
+2.606,
+1.0515,
+1.7532
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "tarse_G2",
+"nom": "Tarse, patte 2 gauche",
+"terme": "Tarse",
+"groupe": "patte2",
+"texte": "Le pied. Une brosse de soies, la scopula, et deux griffes lui permettent de grimper sur du verre.",
+"mat": "cuticule",
+"centre": [
+2.8174,
+0.1287,
+1.9073
+],
+"mini": [
+2.5547,
+-0.0661,
+1.6898
+],
+"maxi": [
+3.0269,
+0.3393,
+2.0774
+],
+"triangles": 1728,
+"fourrure_longueur": 0.05
+},
+{
+"id": "muscle_G2",
+"nom": "Muscles, patte 2 gauche",
+"terme": "Muscles fléchisseurs",
+"groupe": "muscles",
+"texte": "Ces muscles replient la patte. Pour la déplier, l'araignée pousse son sang dedans. À sa mort, les pattes se recroquevillent : la pression a disparu.",
+"mat": "muscle",
+"centre": [
+1.5089,
+0.8318,
+1.0258
+],
+"mini": [
+0.2988,
+0.063,
+0.2724
+],
+"maxi": [
+2.9012,
+1.5445,
+1.9767
+],
+"triangles": 2352,
+"fourrure_longueur": 0
+},
+{
+"id": "coxa_G3",
+"nom": "Coxa, patte 3 gauche",
+"terme": "Coxa",
+"groupe": "patte3",
+"texte": "La hanche. Elle pivote dans le corps et abrite les muscles les plus puissants de la patte.",
+"mat": "cuticule",
+"centre": [
+0.4447,
+0.5743,
+-0.0061
+],
+"mini": [
+0.2806,
+0.4405,
+-0.1485
+],
+"maxi": [
+0.6065,
+0.7105,
+0.1419
+],
+"triangles": 1440,
+"fourrure_longueur": 0.05
+},
+{
+"id": "trochanter_G3",
+"nom": "Trochanter, patte 3 gauche",
+"terme": "Trochanter",
+"groupe": "patte3",
+"texte": "Un petit anneau articulé, la charnière entre la hanche et la cuisse.",
+"mat": "cuticule",
+"centre": [
+0.6584,
+0.5793,
+-0.0633
+],
+"mini": [
+0.5598,
+0.463,
+-0.1844
+],
+"maxi": [
+0.7557,
+0.6939,
+0.0596
+],
+"triangles": 1440,
+"fourrure_longueur": 0.05
+},
+{
+"id": "femur_G3",
+"nom": "Fémur, patte 3 gauche",
+"terme": "Fémur",
+"groupe": "patte3",
+"texte": "La cuisse, le plus long segment. Sans muscle extenseur au genou, c'est la pression du sang qui déplie la patte.",
+"mat": "cuticule",
+"centre": [
+0.9719,
+1.0259,
+-0.1733
+],
+"mini": [
+0.6719,
+0.5668,
+-0.3295
+],
+"maxi": [
+1.2624,
+1.4642,
+-0.007
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "patelle_G3",
+"nom": "Patelle, patte 3 gauche",
+"terme": "Patelle",
+"groupe": "patte3",
+"texte": "Le fameux genou orange de cette mygale. Une articulation purement hydraulique, comme un petit vérin.",
+"mat": "cuticule",
+"centre": [
+1.4138,
+1.4461,
+-0.3461
+],
+"mini": [
+1.1964,
+1.3436,
+-0.4921
+],
+"maxi": [
+1.63,
+1.5474,
+-0.1973
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "tibia_G3",
+"nom": "Tibia, patte 3 gauche",
+"terme": "Tibia",
+"groupe": "patte3",
+"texte": "Couvert de soies sensorielles, les trichobothries. Elles captent le moindre souffle d'air.",
+"mat": "cuticule",
+"centre": [
+1.8552,
+1.2335,
+-0.5489
+],
+"mini": [
+1.575,
+0.9582,
+-0.7172
+],
+"maxi": [
+2.1299,
+1.502,
+-0.37
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "metatarse_G3",
+"nom": "Métatarse, patte 3 gauche",
+"terme": "Métatarse",
+"groupe": "patte3",
+"texte": "L'avant-dernier segment. Ses organes en fente mesurent la tension du squelette : elle sent les vibrations du sol.",
+"mat": "cuticule",
+"centre": [
+2.2345,
+0.649,
+-0.7429
+],
+"mini": [
+2.0591,
+0.2862,
+-0.8558
+],
+"maxi": [
+2.4017,
+1.0117,
+-0.6211
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "tarse_G3",
+"nom": "Tarse, patte 3 gauche",
+"terme": "Tarse",
+"groupe": "patte3",
+"texte": "Le pied. Une brosse de soies, la scopula, et deux griffes lui permettent de grimper sur du verre.",
+"mat": "cuticule",
+"centre": [
+2.5884,
+0.1284,
+-0.9545
+],
+"mini": [
+2.3473,
+-0.073,
+-1.088
+],
+"maxi": [
+2.7843,
+0.3393,
+-0.784
+],
+"triangles": 1728,
+"fourrure_longueur": 0.05
+},
+{
+"id": "muscle_G3",
+"nom": "Muscles, patte 3 gauche",
+"terme": "Muscles fléchisseurs",
+"groupe": "muscles",
+"texte": "Ces muscles replient la patte. Pour la déplier, l'araignée pousse son sang dedans. À sa mort, les pattes se recroquevillent : la pression a disparu.",
+"mat": "muscle",
+"centre": [
+1.4343,
+0.8125,
+-0.3961
+],
+"mini": [
+0.308,
+0.0635,
+-1.0094
+],
+"maxi": [
+2.6653,
+1.497,
+0.0744
+],
+"triangles": 2352,
+"fourrure_longueur": 0
+},
+{
+"id": "coxa_G4",
+"nom": "Coxa, patte 4 gauche",
+"terme": "Coxa",
+"groupe": "patte4",
+"texte": "La hanche. Elle pivote dans le corps et abrite les muscles les plus puissants de la patte.",
+"mat": "cuticule",
+"centre": [
+0.3998,
+0.5743,
+-0.3009
+],
+"mini": [
+0.2296,
+0.4405,
+-0.468
+],
+"maxi": [
+0.5632,
+0.7105,
+-0.1276
+],
+"triangles": 1440,
+"fourrure_longueur": 0.05
+},
+{
+"id": "trochanter_G4",
+"nom": "Trochanter, patte 4 gauche",
+"terme": "Trochanter",
+"groupe": "patte4",
+"texte": "Un petit anneau articulé, la charnière entre la hanche et la cuisse.",
+"mat": "cuticule",
+"centre": [
+0.5454,
+0.5768,
+-0.4683
+],
+"mini": [
+0.4316,
+0.4602,
+-0.5761
+],
+"maxi": [
+0.6561,
+0.692,
+-0.3581
+],
+"triangles": 1440,
+"fourrure_longueur": 0.05
+},
+{
+"id": "femur_G4",
+"nom": "Fémur, patte 4 gauche",
+"terme": "Fémur",
+"groupe": "patte4",
+"texte": "La cuisse, le plus long segment. Sans muscle extenseur au genou, c'est la pression du sang qui déplie la patte.",
+"mat": "cuticule",
+"centre": [
+0.8497,
+1.076,
+-0.8806
+],
+"mini": [
+0.5285,
+0.5573,
+-1.2775
+],
+"maxi": [
+1.1615,
+1.5737,
+-0.4747
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "patelle_G4",
+"nom": "Patelle, patte 4 gauche",
+"terme": "Patelle",
+"groupe": "patte4",
+"texte": "Le fameux genou orange de cette mygale. Une articulation purement hydraulique, comme un petit vérin.",
+"mat": "cuticule",
+"centre": [
+1.2619,
+1.5512,
+-1.473
+],
+"mini": [
+1.0526,
+1.4486,
+-1.7376
+],
+"maxi": [
+1.4685,
+1.6526,
+-1.2068
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "tibia_G4",
+"nom": "Tibia, patte 4 gauche",
+"terme": "Tibia",
+"groupe": "patte4",
+"texte": "Couvert de soies sensorielles, les trichobothries. Elles captent le moindre souffle d'air.",
+"mat": "cuticule",
+"centre": [
+1.6202,
+1.3366,
+-2.0642
+],
+"mini": [
+1.3627,
+1.0531,
+-2.4471
+],
+"maxi": [
+1.8678,
+1.6135,
+-1.6812
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "metatarse_G4",
+"nom": "Métatarse, patte 4 gauche",
+"terme": "Métatarse",
+"groupe": "patte4",
+"texte": "L'avant-dernier segment. Ses organes en fente mesurent la tension du squelette : elle sent les vibrations du sol.",
+"mat": "cuticule",
+"centre": [
+1.9595,
+0.7012,
+-2.6829
+],
+"mini": [
+1.7814,
+0.2855,
+-2.9692
+],
+"maxi": [
+2.1288,
+1.1169,
+-2.3892
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "tarse_G4",
+"nom": "Tarse, patte 4 gauche",
+"terme": "Tarse",
+"groupe": "patte4",
+"texte": "Le pied. Une brosse de soies, la scopula, et deux griffes lui permettent de grimper sur du verre.",
+"mat": "cuticule",
+"centre": [
+2.2437,
+0.1315,
+-3.283
+],
+"mini": [
+2.0599,
+-0.0597,
+-3.5561
+],
+"maxi": [
+2.3813,
+0.3456,
+-2.9264
+],
+"triangles": 1728,
+"fourrure_longueur": 0.05
+},
+{
+"id": "muscle_G4",
+"nom": "Muscles, patte 4 gauche",
+"terme": "Muscles fléchisseurs",
+"groupe": "muscles",
+"texte": "Ces muscles replient la patte. Pour la déplier, l'araignée pousse son sang dedans. À sa mort, les pattes se recroquevillent : la pression a disparu.",
+"mat": "muscle",
+"centre": [
+1.2548,
+0.8565,
+-1.5686
+],
+"mini": [
+0.276,
+0.0636,
+-3.3953
+],
+"maxi": [
+2.3028,
+1.6001,
+-0.1736
+],
+"triangles": 2352,
+"fourrure_longueur": 0
+},
+{
+"id": "coxa_D1",
+"nom": "Coxa, patte 1 droite",
+"terme": "Coxa",
+"groupe": "patte1",
+"texte": "La hanche. Elle pivote dans le corps et abrite les muscles les plus puissants de la patte.",
+"mat": "cuticule",
+"centre": [
+-0.37,
+0.5743,
+0.7317
+],
+"mini": [
+-0.518,
+0.4405,
+0.5584
+],
+"maxi": [
+-0.2135,
+0.7105,
+0.9007
+],
+"triangles": 1440,
+"fourrure_longueur": 0.05
+},
+{
+"id": "trochanter_D1",
+"nom": "Trochanter, patte 1 droite",
+"terme": "Trochanter",
+"groupe": "patte1",
+"texte": "Un petit anneau articulé, la charnière entre la hanche et la cuisse.",
+"mat": "cuticule",
+"centre": [
+-0.4705,
+0.5793,
+0.9288
+],
+"mini": [
+-0.5881,
+0.463,
+0.8252
+],
+"maxi": [
+-0.3505,
+0.6939,
+1.0306
+],
+"triangles": 1440,
+"fourrure_longueur": 0.05
+},
+{
+"id": "femur_D1",
+"nom": "Fémur, patte 1 droite",
+"terme": "Fémur",
+"groupe": "patte1",
+"texte": "La cuisse, le plus long segment. Sans muscle extenseur au genou, c'est la pression du sang qui déplie la patte.",
+"mat": "cuticule",
+"centre": [
+-0.648,
+1.0625,
+1.3578
+],
+"mini": [
+-0.8583,
+0.5638,
+0.949
+],
+"maxi": [
+-0.4275,
+1.5402,
+1.7576
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "patelle_D1",
+"nom": "Patelle, patte 1 droite",
+"terme": "Patelle",
+"groupe": "patte1",
+"texte": "Le fameux genou orange de cette mygale. Une articulation purement hydraulique, comme un petit vérin.",
+"mat": "cuticule",
+"centre": [
+-0.8803,
+1.5175,
+1.9694
+],
+"mini": [
+-1.0295,
+1.4153,
+1.7017
+],
+"maxi": [
+-0.7281,
+1.6186,
+2.2371
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "tibia_D1",
+"nom": "Tibia, patte 1 droite",
+"terme": "Tibia",
+"groupe": "patte1",
+"texte": "Couvert de soies sensorielles, les trichobothries. Elles captent le moindre souffle d'air.",
+"mat": "cuticule",
+"centre": [
+-1.0679,
+1.3032,
+2.574
+],
+"mini": [
+-1.2214,
+1.0227,
+2.1887
+],
+"maxi": [
+-0.9029,
+1.5771,
+2.9592
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "metatarse_D1",
+"nom": "Métatarse, patte 1 droite",
+"terme": "Métatarse",
+"groupe": "patte1",
+"texte": "L'avant-dernier segment. Ses organes en fente mesurent la tension du squelette : elle sent les vibrations du sol.",
+"mat": "cuticule",
+"centre": [
+-1.2288,
+0.686,
+3.1848
+],
+"mini": [
+-1.3267,
+0.2879,
+2.9021
+],
+"maxi": [
+-1.122,
+1.084,
+3.4604
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "tarse_D1",
+"nom": "Tarse, patte 1 droite",
+"terme": "Tarse",
+"groupe": "patte1",
+"texte": "Le pied. Une brosse de soies, la scopula, et deux griffes lui permettent de grimper sur du verre.",
+"mat": "cuticule",
+"centre": [
+-1.3458,
+0.1314,
+3.7693
+],
+"mini": [
+-1.4171,
+-0.0633,
+3.4187
+],
+"maxi": [
+-1.247,
+0.346,
+4.0378
+],
+"triangles": 1728,
+"fourrure_longueur": 0.05
+},
+{
+"id": "muscle_D1",
+"nom": "Muscles, patte 1 droite",
+"terme": "Muscles fléchisseurs",
+"groupe": "muscles",
+"texte": "Ces muscles replient la patte. Pour la déplier, l'araignée pousse son sang dedans. À sa mort, les pattes se recroquevillent : la pression a disparu.",
+"mat": "muscle",
+"centre": [
+-0.8518,
+0.8433,
+2.0486
+],
+"mini": [
+-1.378,
+0.0637,
+0.597
+],
+"maxi": [
+-0.2641,
+1.5664,
+3.8769
+],
+"triangles": 2352,
+"fourrure_longueur": 0
+},
+{
+"id": "coxa_D2",
+"nom": "Coxa, patte 2 droite",
+"terme": "Coxa",
+"groupe": "patte2",
+"texte": "La hanche. Elle pivote dans le corps et abrite les muscles les plus puissants de la patte.",
+"mat": "cuticule",
+"centre": [
+-0.4341,
+0.5743,
+0.3754
+],
+"mini": [
+-0.6026,
+0.4405,
+0.2204
+],
+"maxi": [
+-0.2614,
+0.7105,
+0.5219
+],
+"triangles": 1440,
+"fourrure_longueur": 0.05
+},
+{
+"id": "trochanter_D2",
+"nom": "Trochanter, patte 2 droite",
+"terme": "Trochanter",
+"groupe": "patte2",
+"texte": "Un petit anneau articulé, la charnière entre la hanche et la cuisse.",
+"mat": "cuticule",
+"centre": [
+-0.6318,
+0.5793,
+0.4746
+],
+"mini": [
+-0.7352,
+0.463,
+0.3559
+],
+"maxi": [
+-0.5266,
+0.6939,
+0.5906
+],
+"triangles": 1440,
+"fourrure_longueur": 0.05
+},
+{
+"id": "femur_D2",
+"nom": "Fémur, patte 2 droite",
+"terme": "Fémur",
+"groupe": "patte2",
+"texte": "La cuisse, le plus long segment. Sans muscle extenseur au genou, c'est la pression du sang qui déplie la patte.",
+"mat": "cuticule",
+"centre": [
+-0.9836,
+1.052,
+0.6749
+],
+"mini": [
+-1.3156,
+0.5647,
+0.4377
+],
+"maxi": [
+-0.6423,
+1.5184,
+0.9021
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "patelle_D2",
+"nom": "Patelle, patte 2 droite",
+"terme": "Patelle",
+"groupe": "patte2",
+"texte": "Le fameux genou orange de cette mygale. Une articulation purement hydraulique, comme un petit vérin.",
+"mat": "cuticule",
+"centre": [
+-1.4772,
+1.4958,
+0.9696
+],
+"mini": [
+-1.711,
+1.3937,
+0.7837
+],
+"maxi": [
+-1.2418,
+1.5967,
+1.1528
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "tibia_D2",
+"nom": "Tibia, patte 2 droite",
+"terme": "Tibia",
+"groupe": "patte2",
+"texte": "Couvert de soies sensorielles, les trichobothries. Elles captent le moindre souffle d'air.",
+"mat": "cuticule",
+"centre": [
+-1.9538,
+1.2762,
+1.2809
+],
+"mini": [
+-2.2555,
+0.9937,
+1.0447
+],
+"maxi": [
+-1.6454,
+1.5521,
+1.5072
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "metatarse_D2",
+"nom": "Métatarse, patte 2 droite",
+"terme": "Métatarse",
+"groupe": "patte2",
+"texte": "L'avant-dernier segment. Ses organes en fente mesurent la tension du squelette : elle sent les vibrations du sol.",
+"mat": "cuticule",
+"centre": [
+-2.401,
+0.6672,
+1.5917
+],
+"mini": [
+-2.606,
+0.2828,
+1.4216
+],
+"maxi": [
+-2.188,
+1.0515,
+1.7532
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "tarse_D2",
+"nom": "Tarse, patte 2 droite",
+"terme": "Tarse",
+"groupe": "patte2",
+"texte": "Le pied. Une brosse de soies, la scopula, et deux griffes lui permettent de grimper sur du verre.",
+"mat": "cuticule",
+"centre": [
+-2.8174,
+0.1287,
+1.9073
+],
+"mini": [
+-3.0269,
+-0.0661,
+1.6898
+],
+"maxi": [
+-2.5547,
+0.3393,
+2.0774
+],
+"triangles": 1728,
+"fourrure_longueur": 0.05
+},
+{
+"id": "muscle_D2",
+"nom": "Muscles, patte 2 droite",
+"terme": "Muscles fléchisseurs",
+"groupe": "muscles",
+"texte": "Ces muscles replient la patte. Pour la déplier, l'araignée pousse son sang dedans. À sa mort, les pattes se recroquevillent : la pression a disparu.",
+"mat": "muscle",
+"centre": [
+-1.5089,
+0.8318,
+1.0258
+],
+"mini": [
+-2.9023,
+0.0629,
+0.2735
+],
+"maxi": [
+-0.2972,
+1.5445,
+1.9778
+],
+"triangles": 2352,
+"fourrure_longueur": 0
+},
+{
+"id": "coxa_D3",
+"nom": "Coxa, patte 3 droite",
+"terme": "Coxa",
+"groupe": "patte3",
+"texte": "La hanche. Elle pivote dans le corps et abrite les muscles les plus puissants de la patte.",
+"mat": "cuticule",
+"centre": [
+-0.4447,
+0.5743,
+-0.0061
+],
+"mini": [
+-0.6065,
+0.4405,
+-0.1485
+],
+"maxi": [
+-0.2806,
+0.7105,
+0.1419
+],
+"triangles": 1440,
+"fourrure_longueur": 0.05
+},
+{
+"id": "trochanter_D3",
+"nom": "Trochanter, patte 3 droite",
+"terme": "Trochanter",
+"groupe": "patte3",
+"texte": "Un petit anneau articulé, la charnière entre la hanche et la cuisse.",
+"mat": "cuticule",
+"centre": [
+-0.6584,
+0.5793,
+-0.0633
+],
+"mini": [
+-0.7557,
+0.463,
+-0.1844
+],
+"maxi": [
+-0.5598,
+0.6939,
+0.0596
+],
+"triangles": 1440,
+"fourrure_longueur": 0.05
+},
+{
+"id": "femur_D3",
+"nom": "Fémur, patte 3 droite",
+"terme": "Fémur",
+"groupe": "patte3",
+"texte": "La cuisse, le plus long segment. Sans muscle extenseur au genou, c'est la pression du sang qui déplie la patte.",
+"mat": "cuticule",
+"centre": [
+-0.9719,
+1.0259,
+-0.1733
+],
+"mini": [
+-1.2624,
+0.5668,
+-0.3295
+],
+"maxi": [
+-0.6719,
+1.4642,
+-0.007
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "patelle_D3",
+"nom": "Patelle, patte 3 droite",
+"terme": "Patelle",
+"groupe": "patte3",
+"texte": "Le fameux genou orange de cette mygale. Une articulation purement hydraulique, comme un petit vérin.",
+"mat": "cuticule",
+"centre": [
+-1.4138,
+1.4461,
+-0.3461
+],
+"mini": [
+-1.63,
+1.3436,
+-0.4921
+],
+"maxi": [
+-1.1964,
+1.5474,
+-0.1973
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "tibia_D3",
+"nom": "Tibia, patte 3 droite",
+"terme": "Tibia",
+"groupe": "patte3",
+"texte": "Couvert de soies sensorielles, les trichobothries. Elles captent le moindre souffle d'air.",
+"mat": "cuticule",
+"centre": [
+-1.8552,
+1.2335,
+-0.5489
+],
+"mini": [
+-2.1299,
+0.9582,
+-0.7172
+],
+"maxi": [
+-1.575,
+1.502,
+-0.37
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "metatarse_D3",
+"nom": "Métatarse, patte 3 droite",
+"terme": "Métatarse",
+"groupe": "patte3",
+"texte": "L'avant-dernier segment. Ses organes en fente mesurent la tension du squelette : elle sent les vibrations du sol.",
+"mat": "cuticule",
+"centre": [
+-2.2345,
+0.649,
+-0.7429
+],
+"mini": [
+-2.4017,
+0.2862,
+-0.8558
+],
+"maxi": [
+-2.0591,
+1.0117,
+-0.6211
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "tarse_D3",
+"nom": "Tarse, patte 3 droite",
+"terme": "Tarse",
+"groupe": "patte3",
+"texte": "Le pied. Une brosse de soies, la scopula, et deux griffes lui permettent de grimper sur du verre.",
+"mat": "cuticule",
+"centre": [
+-2.5884,
+0.1284,
+-0.9545
+],
+"mini": [
+-2.7843,
+-0.073,
+-1.0881
+],
+"maxi": [
+-2.3473,
+0.3393,
+-0.784
+],
+"triangles": 1728,
+"fourrure_longueur": 0.05
+},
+{
+"id": "muscle_D3",
+"nom": "Muscles, patte 3 droite",
+"terme": "Muscles fléchisseurs",
+"groupe": "muscles",
+"texte": "Ces muscles replient la patte. Pour la déplier, l'araignée pousse son sang dedans. À sa mort, les pattes se recroquevillent : la pression a disparu.",
+"mat": "muscle",
+"centre": [
+-1.4344,
+0.8125,
+-0.396
+],
+"mini": [
+-2.6642,
+0.0641,
+-1.0084
+],
+"maxi": [
+-0.3089,
+1.4965,
+0.0751
+],
+"triangles": 2352,
+"fourrure_longueur": 0
+},
+{
+"id": "coxa_D4",
+"nom": "Coxa, patte 4 droite",
+"terme": "Coxa",
+"groupe": "patte4",
+"texte": "La hanche. Elle pivote dans le corps et abrite les muscles les plus puissants de la patte.",
+"mat": "cuticule",
+"centre": [
+-0.3998,
+0.5743,
+-0.3009
+],
+"mini": [
+-0.5632,
+0.4405,
+-0.468
+],
+"maxi": [
+-0.2296,
+0.7105,
+-0.1276
+],
+"triangles": 1440,
+"fourrure_longueur": 0.05
+},
+{
+"id": "trochanter_D4",
+"nom": "Trochanter, patte 4 droite",
+"terme": "Trochanter",
+"groupe": "patte4",
+"texte": "Un petit anneau articulé, la charnière entre la hanche et la cuisse.",
+"mat": "cuticule",
+"centre": [
+-0.5454,
+0.5768,
+-0.4683
+],
+"mini": [
+-0.6561,
+0.4602,
+-0.5761
+],
+"maxi": [
+-0.4316,
+0.692,
+-0.3581
+],
+"triangles": 1440,
+"fourrure_longueur": 0.05
+},
+{
+"id": "femur_D4",
+"nom": "Fémur, patte 4 droite",
+"terme": "Fémur",
+"groupe": "patte4",
+"texte": "La cuisse, le plus long segment. Sans muscle extenseur au genou, c'est la pression du sang qui déplie la patte.",
+"mat": "cuticule",
+"centre": [
+-0.8497,
+1.076,
+-0.8806
+],
+"mini": [
+-1.1615,
+0.5573,
+-1.2775
+],
+"maxi": [
+-0.5285,
+1.5737,
+-0.4747
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "patelle_D4",
+"nom": "Patelle, patte 4 droite",
+"terme": "Patelle",
+"groupe": "patte4",
+"texte": "Le fameux genou orange de cette mygale. Une articulation purement hydraulique, comme un petit vérin.",
+"mat": "cuticule",
+"centre": [
+-1.2619,
+1.5512,
+-1.473
+],
+"mini": [
+-1.4685,
+1.4486,
+-1.7376
+],
+"maxi": [
+-1.0526,
+1.6526,
+-1.2068
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "tibia_D4",
+"nom": "Tibia, patte 4 droite",
+"terme": "Tibia",
+"groupe": "patte4",
+"texte": "Couvert de soies sensorielles, les trichobothries. Elles captent le moindre souffle d'air.",
+"mat": "cuticule",
+"centre": [
+-1.6202,
+1.3366,
+-2.0642
+],
+"mini": [
+-1.8678,
+1.0531,
+-2.4471
+],
+"maxi": [
+-1.3627,
+1.6135,
+-1.6812
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "metatarse_D4",
+"nom": "Métatarse, patte 4 droite",
+"terme": "Métatarse",
+"groupe": "patte4",
+"texte": "L'avant-dernier segment. Ses organes en fente mesurent la tension du squelette : elle sent les vibrations du sol.",
+"mat": "cuticule",
+"centre": [
+-1.9595,
+0.7012,
+-2.6829
+],
+"mini": [
+-2.1288,
+0.2855,
+-2.9692
+],
+"maxi": [
+-1.7814,
+1.1169,
+-2.3892
+],
+"triangles": 1296,
+"fourrure_longueur": 0.05
+},
+{
+"id": "tarse_D4",
+"nom": "Tarse, patte 4 droite",
+"terme": "Tarse",
+"groupe": "patte4",
+"texte": "Le pied. Une brosse de soies, la scopula, et deux griffes lui permettent de grimper sur du verre.",
+"mat": "cuticule",
+"centre": [
+-2.2437,
+0.1315,
+-3.283
+],
+"mini": [
+-2.3815,
+-0.0597,
+-3.5561
+],
+"maxi": [
+-2.0599,
+0.3456,
+-2.9264
+],
+"triangles": 1728,
+"fourrure_longueur": 0.05
+},
+{
+"id": "muscle_D4",
+"nom": "Muscles, patte 4 droite",
+"terme": "Muscles fléchisseurs",
+"groupe": "muscles",
+"texte": "Ces muscles replient la patte. Pour la déplier, l'araignée pousse son sang dedans. À sa mort, les pattes se recroquevillent : la pression a disparu.",
+"mat": "muscle",
+"centre": [
+-1.2548,
+0.8565,
+-1.5686
+],
+"mini": [
+-2.3053,
+0.0624,
+-3.3969
+],
+"maxi": [
+-0.2777,
+1.6019,
+-0.1706
+],
+"triangles": 2352,
+"fourrure_longueur": 0
+},
+{
+"id": "palpe_G",
+"nom": "Pédipalpe gauche",
+"terme": "Pédipalpe",
+"groupe": "tete",
+"texte": "Comme une paire de mains près de la bouche. Elle tâte, goûte et maintient la proie.",
+"mat": "cuticule",
+"centre": [
+0.3638,
+0.7302,
+1.4718
+],
+"mini": [
+0.1267,
+0.4885,
+0.7291
+],
+"maxi": [
+0.5288,
+1.0601,
+2.3124
+],
+"triangles": 5376,
+"fourrure_longueur": 0.05
+},
+{
+"id": "palpe_D",
+"nom": "Pédipalpe droit",
+"terme": "Pédipalpe",
+"groupe": "tete",
+"texte": "Comme une paire de mains près de la bouche. Elle tâte, goûte et maintient la proie.",
+"mat": "cuticule",
+"centre": [
+-0.3638,
+0.7302,
+1.4718
+],
+"mini": [
+-0.5288,
+0.4885,
+0.7291
+],
+"maxi": [
+-0.1267,
+1.0601,
+2.3124
+],
+"triangles": 5376,
+"fourrure_longueur": 0.05
+},
+{
+"id": "chelicere_G",
+"nom": "Chélicère gauche",
+"terme": "Chélicère",
+"groupe": "tete",
+"texte": "La base du crochet, un bloc musculeux. Chez la mygale, elle se lève et frappe vers le bas, comme une pioche.",
+"mat": "cuticule",
+"centre": [
+0.1414,
+0.7725,
+1.0054
+],
+"mini": [
+-0.0587,
+0.5552,
+0.7101
+],
+"maxi": [
+0.3517,
+1.035,
+1.3096
+],
+"triangles": 5712,
+"fourrure_longueur": 0.062
+},
+{
+"id": "crochet_G",
+"nom": "Crochet gauche",
+"terme": "Crochet à venin",
+"groupe": "tete",
+"texte": "Une griffe creuse, longue d'un centimètre. Elle injecte le venin par un petit trou près de la pointe.",
+"mat": "griffe",
+"centre": [
+0.1225,
+0.4456,
+1.1244
+],
+"mini": [
+0.0724,
+0.3498,
+0.96
+],
+"maxi": [
+0.1876,
+0.6123,
+1.2771
+],
+"triangles": 864,
+"fourrure_longueur": 0
+},
+{
+"id": "venin_G",
+"nom": "Glande à venin gauche",
+"terme": "Glande à venin",
+"groupe": "tete",
+"texte": "Un sac spiralé de muscles. En se contractant, il chasse le venin vers le crochet. Chez les mygales il tient dans la chélicère.",
+"mat": "organe",
+"centre": [
+0.141,
+0.7966,
+0.958
+],
+"mini": [
+0.0773,
+0.6045,
+0.7755
+],
+"maxi": [
+0.2127,
+0.8954,
+1.2141
+],
+"triangles": 1196,
+"fourrure_longueur": 0
+},
+{
+"id": "chelicere_D",
+"nom": "Chélicère droite",
+"terme": "Chélicère",
+"groupe": "tete",
+"texte": "La base du crochet, un bloc musculeux. Chez la mygale, elle se lève et frappe vers le bas, comme une pioche.",
+"mat": "cuticule",
+"centre": [
+-0.1414,
+0.7725,
+1.0054
+],
+"mini": [
+-0.3517,
+0.5552,
+0.7101
+],
+"maxi": [
+0.0587,
+1.035,
+1.3096
+],
+"triangles": 5712,
+"fourrure_longueur": 0.062
+},
+{
+"id": "crochet_D",
+"nom": "Crochet droite",
+"terme": "Crochet à venin",
+"groupe": "tete",
+"texte": "Une griffe creuse, longue d'un centimètre. Elle injecte le venin par un petit trou près de la pointe.",
+"mat": "griffe",
+"centre": [
+-0.1225,
+0.4456,
+1.1244
+],
+"mini": [
+-0.1876,
+0.3498,
+0.96
+],
+"maxi": [
+-0.0724,
+0.6123,
+1.2771
+],
+"triangles": 864,
+"fourrure_longueur": 0
+},
+{
+"id": "venin_D",
+"nom": "Glande à venin droite",
+"terme": "Glande à venin",
+"groupe": "tete",
+"texte": "Un sac spiralé de muscles. En se contractant, il chasse le venin vers le crochet. Chez les mygales il tient dans la chélicère.",
+"mat": "organe",
+"centre": [
+-0.141,
+0.7966,
+0.9581
+],
+"mini": [
+-0.2129,
+0.605,
+0.7768
+],
+"maxi": [
+-0.0778,
+0.8936,
+1.2135
+],
+"triangles": 1196,
+"fourrure_longueur": 0
+},
+{
+"id": "abdomen",
+"nom": "Abdomen",
+"terme": "Opisthosoma",
+"groupe": "exosquelette",
+"texte": "Une poche souple et poilue. La mygale peut lancer ses poils urticants en les frottant avec ses pattes arrière.",
+"mat": "cuticule",
+"centre": [
+0.0001,
+0.8264,
+-1.1701
+],
+"mini": [
+-0.7404,
+0.1709,
+-2.0587
+],
+"maxi": [
+0.7389,
+1.5524,
+-0.2806
+],
+"triangles": 42688,
+"fourrure_longueur": 0.074
+},
+{
+"id": "pedicelle",
+"nom": "Pédicelle",
+"terme": "Taille",
+"groupe": "exosquelette",
+"texte": "La taille fine qui relie les deux moitiés. L'aorte, l'intestin et un nerf y passent, serrés comme des câbles.",
+"mat": "cuticule",
+"centre": [
+-0.0,
+0.7586,
+-0.3043
+],
+"mini": [
+-0.112,
+0.638,
+-0.4881
+],
+"maxi": [
+0.112,
+0.8984,
+-0.1586
+],
+"triangles": 2112,
+"fourrure_longueur": 0.03
+},
+{
+"id": "filieres",
+"nom": "Filières",
+"terme": "Filières",
+"groupe": "exosquelette",
+"texte": "Quatre petits doigts mobiles, au bout de l'abdomen. La soie en sort liquide puis durcit en s'étirant.",
+"mat": "cuticule",
+"centre": [
+0.0,
+0.6581,
+-2.0946
+],
+"mini": [
+-0.1847,
+0.5787,
+-2.3027
+],
+"maxi": [
+0.1847,
+0.7498,
+-1.9484
+],
+"triangles": 1488,
+"fourrure_longueur": 0
+},
+{
+"id": "estomac",
+"nom": "Estomac suceur",
+"terme": "Estomac pompant",
+"groupe": "digestion",
+"texte": "Une vraie pompe. Elle n'a pas de mâchoire : elle liquéfie sa proie avec ses sucs et l'aspire, lentement.",
+"mat": "organe",
+"centre": [
+0.0,
+0.7937,
+0.2002
+],
+"mini": [
+-0.2831,
+0.7,
+-0.0995
+],
+"maxi": [
+0.281,
+0.9031,
+0.5018
+],
+"triangles": 26092,
+"fourrure_longueur": 0
+},
+{
+"id": "muscles_thorax",
+"nom": "Muscles du thorax",
+"terme": "Muscles coxaux",
+"groupe": "muscles",
+"texte": "Des faisceaux qui relient le plancher du corps aux hanches. Ils font pivoter chaque patte depuis le centre du corps.",
+"mat": "muscle",
+"centre": [
+-0.0,
+0.7062,
+0.0994
+],
+"mini": [
+-0.3871,
+0.6056,
+-0.3639
+],
+"maxi": [
+0.3868,
+1.0008,
+0.3552
+],
+"triangles": 4640,
+"fourrure_longueur": 0
+},
+{
+"id": "cerveau",
+"nom": "Cerveau",
+"terme": "Masse nerveuse centrale",
+"groupe": "nerfs",
+"texte": "Tout le système nerveux est concentré ici, en un seul bloc. Chez les petites araignées, il déborde jusque dans les pattes.",
+"mat": "nerf",
+"centre": [
+-0.0001,
+0.6574,
+0.3584
+],
+"mini": [
+-0.1864,
+0.5221,
+-0.0569
+],
+"maxi": [
+0.1884,
+0.8093,
+0.8157
+],
+"triangles": 37280,
+"fourrure_longueur": 0
+},
+{
+"id": "nerfs",
+"nom": "Nerfs",
+"terme": "Nerfs des pattes",
+"groupe": "nerfs",
+"texte": "Un câble part vers chaque patte, jusqu'au bout des griffes. Le système complet tient dans la longueur d'un doigt.",
+"mat": "nerf",
+"centre": [
+0.0002,
+0.9109,
+0.2731
+],
+"mini": [
+-2.5811,
+0.3088,
+-2.9514
+],
+"maxi": [
+2.5811,
+1.6396,
+3.4431
+],
+"triangles": 4632,
+"fourrure_longueur": 0
+},
+{
+"id": "caecums",
+"nom": "Caecums digestifs",
+"terme": "Diverticules du prosoma",
+"groupe": "digestion",
+"texte": "Des culs-de-sac qui s'enfoncent jusqu'aux hanches des pattes. Ils stockent le repas et l'absorbent lentement.",
+"mat": "organe",
+"centre": [
+0.0012,
+0.762,
+0.2347
+],
+"mini": [
+-0.5188,
+0.6434,
+-0.2358
+],
+"maxi": [
+0.5166,
+0.8129,
+0.6672
+],
+"triangles": 16000,
+"fourrure_longueur": 0
+},
+{
+"id": "intestin",
+"nom": "Tube digestif",
+"terme": "Œsophage et intestin",
+"groupe": "digestion",
+"texte": "De la bouche à l'anus, un fin tube traverse la taille. Elle ne peut avaler que du liquide.",
+"mat": "organe",
+"centre": [
+0.0,
+0.7353,
+-0.4119
+],
+"mini": [
+-0.0575,
+0.5965,
+-1.9861
+],
+"maxi": [
+0.0671,
+0.8375,
+0.7937
+],
+"triangles": 1800,
+"fourrure_longueur": 0
+},
+{
+"id": "stercorale",
+"nom": "Poche stercorale",
+"terme": "Poche à déchets",
+"groupe": "digestion",
+"texte": "Une réserve à déchets juste avant l'anus. Elle peut y garder ses excréments pendant des semaines.",
+"mat": "organe",
+"centre": [
+0.0066,
+0.673,
+-1.6698
+],
+"mini": [
+-0.1071,
+0.5737,
+-1.8456
+],
+"maxi": [
+0.1155,
+0.768,
+-1.4976
+],
+"triangles": 4312,
+"fourrure_longueur": 0
+},
+{
+"id": "diverticules",
+"nom": "Diverticules de l'intestin",
+"terme": "Intestin moyen",
+"groupe": "digestion",
+"texte": "La plus grande partie de l'abdomen. Grâce à ces réserves, une mygale peut jeûner plusieurs mois.",
+"mat": "organe",
+"centre": [
+0.0046,
+0.8256,
+-1.1446
+],
+"mini": [
+-0.7097,
+0.1998,
+-1.8165
+],
+"maxi": [
+0.7058,
+1.395,
+-0.4127
+],
+"triangles": 48000,
+"fourrure_longueur": 0
+},
+{
+"id": "coeur",
+"nom": "Cœur",
+"terme": "Cœur tubulaire",
+"groupe": "circulation",
+"texte": "Un long tube sur le dos, percé de valves. Il pompe une hémolymphe bleue : le cuivre y remplace le fer de notre sang.",
+"mat": "coeur",
+"centre": [
+0.0,
+1.2836,
+-1.0973
+],
+"mini": [
+-0.4224,
+1.1379,
+-1.66
+],
+"maxi": [
+0.4235,
+1.4042,
+-0.5195
+],
+"triangles": 3360,
+"fourrure_longueur": 0
+},
+{
+"id": "vaisseaux",
+"nom": "Vaisseaux",
+"terme": "Artères de l'abdomen",
+"groupe": "circulation",
+"texte": "Des artères quittent le cœur et se perdent entre les organes, qui baignent ensuite directement dans l'hémolymphe.",
+"mat": "coeur",
+"centre": [
+-0.0066,
+1.2701,
+-1.1008
+],
+"mini": [
+-0.588,
+0.9891,
+-1.6071
+],
+"maxi": [
+0.5508,
+1.3794,
+-0.614
+],
+"triangles": 18720,
+"fourrure_longueur": 0
+},
+{
+"id": "aorte",
+"nom": "Aorte",
+"terme": "Artères",
+"groupe": "circulation",
+"texte": "L'hémolymphe part vers l'avant par cette artère, puis circule librement entre les organes : il n'y a pas de veines.",
+"mat": "coeur",
+"centre": [
+0.0,
+0.8467,
+0.1585
+],
+"mini": [
+-0.4043,
+0.6922,
+-0.5658
+],
+"maxi": [
+0.4047,
+1.2223,
+0.7016
+],
+"triangles": 1888,
+"fourrure_longueur": 0
+},
+{
+"id": "poumon_G1",
+"nom": "Poumon 1 gauche",
+"terme": "Poumon en livre",
+"groupe": "respiration",
+"texte": "Des dizaines de lamelles empilées comme les pages d'un livre. L'air passe entre elles et l'oxygène traverse leur fine paroi. Elle en a quatre.",
+"mat": "poumon",
+"centre": [
+0.3071,
+0.3872,
+-0.7679
+],
+"mini": [
+0.1373,
+0.2556,
+-0.9133
+],
+"maxi": [
+0.4957,
+0.4859,
+-0.6185
+],
+"triangles": 4912,
+"fourrure_longueur": 0
+},
+{
+"id": "poumon_G2",
+"nom": "Poumon 2 gauche",
+"terme": "Poumon en livre",
+"groupe": "respiration",
+"texte": "Des dizaines de lamelles empilées comme les pages d'un livre. L'air passe entre elles et l'oxygène traverse leur fine paroi. Elle en a quatre.",
+"mat": "poumon",
+"centre": [
+0.3523,
+0.3758,
+-1.1358
+],
+"mini": [
+0.1773,
+0.2444,
+-1.2764
+],
+"maxi": [
+0.5296,
+0.4859,
+-0.9786
+],
+"triangles": 4912,
+"fourrure_longueur": 0
+},
+{
+"id": "poumon_D1",
+"nom": "Poumon 1 droit",
+"terme": "Poumon en livre",
+"groupe": "respiration",
+"texte": "Des dizaines de lamelles empilées comme les pages d'un livre. L'air passe entre elles et l'oxygène traverse leur fine paroi. Elle en a quatre.",
+"mat": "poumon",
+"centre": [
+-0.3081,
+0.3854,
+-0.7677
+],
+"mini": [
+-0.4983,
+0.2556,
+-0.9094
+],
+"maxi": [
+-0.1371,
+0.4859,
+-0.6185
+],
+"triangles": 4912,
+"fourrure_longueur": 0
+},
+{
+"id": "poumon_D2",
+"nom": "Poumon 2 droit",
+"terme": "Poumon en livre",
+"groupe": "respiration",
+"texte": "Des dizaines de lamelles empilées comme les pages d'un livre. L'air passe entre elles et l'oxygène traverse leur fine paroi. Elle en a quatre.",
+"mat": "poumon",
+"centre": [
+-0.3529,
+0.3752,
+-1.1359
+],
+"mini": [
+-0.5308,
+0.2444,
+-1.2764
+],
+"maxi": [
+-0.1771,
+0.4859,
+-0.9783
+],
+"triangles": 4912,
+"fourrure_longueur": 0
+},
+{
+"id": "ovaires",
+"nom": "Ovaires",
+"terme": "Grappes d'œufs",
+"groupe": "reproduction",
+"texte": "Deux chapelets d'œufs sous l'intestin. Une femelle pond jusqu'à plusieurs centaines d'œufs dans un cocon de soie.",
+"mat": "organe",
+"centre": [
+-0.0004,
+0.4155,
+-1.0965
+],
+"mini": [
+-0.2082,
+0.3304,
+-1.5188
+],
+"maxi": [
+0.2126,
+0.5168,
+-0.6884
+],
+"triangles": 14688,
+"fourrure_longueur": 0
+},
+{
+"id": "soie",
+"nom": "Glandes à soie",
+"terme": "Glandes séricigènes",
+"groupe": "soie",
+"texte": "Plusieurs sortes de glandes, chacune pour une soie : terrier, cocon ou trappe. La soie y reste liquide jusqu'aux filières.",
+"mat": "soie",
+"centre": [
+0.0059,
+0.4572,
+-1.6057
+],
+"mini": [
+-0.2941,
+0.2689,
+-2.0055
+],
+"maxi": [
+0.3703,
+0.6957,
+-1.0298
+],
+"triangles": 19488,
+"fourrure_longueur": 0
+},
+{
+"id": "malpighi",
+"nom": "Tubes de Malpighi",
+"terme": "Reins",
+"groupe": "digestion",
+"texte": "Ses reins : des tubes très fins qui filtrent l'hémolymphe. Ils éliminent des cristaux blancs presque sans perdre d'eau.",
+"mat": "organe",
+"centre": [
+0.01,
+0.6617,
+-1.383
+],
+"mini": [
+-0.6044,
+0.3328,
+-1.862
+],
+"maxi": [
+0.6156,
+1.2157,
+-0.7094
+],
+"triangles": 18768,
+"fourrure_longueur": 0
+}
+],
+"poils": {
+"echelle": 8.0,
+"octets_par_sommet": 12,
+"sommets_par_poil": 9,
+"decalages": {
+"position": 0,
+"normale": 6,
+"couleur": 9
+},
+"index_relatifs": [
+0,
+1,
+2,
+1,
+3,
+2,
+2,
+3,
+4,
+3,
+5,
+4,
+4,
+5,
+6,
+5,
+7,
+6,
+6,
+7,
+8
+],
+"fichiers": {
+"a": "poils-a.bin",
+"b": "poils-b.bin"
+},
+"table": {
+"a": {
+"carapace": [
+0,
+5320
+],
+"abdomen": [
+5320,
+13440
+],
+"pedicelle": [
+18760,
+100
+],
+"sternum": [
+18860,
+440
+],
+"chelicere_G": [
+19300,
+1552
+],
+"palpe_G": [
+20852,
+1072
+],
+"chelicere_D": [
+21924,
+1552
+],
+"palpe_D": [
+23476,
+1072
+],
+"coxa_G1": [
+24548,
+176
+],
+"trochanter_G1": [
+24724,
+84
+],
+"femur_G1": [
+24808,
+564
+],
+"patelle_G1": [
+25372,
+406
+],
+"tibia_G1": [
+25778,
+474
+],
+"metatarse_G1": [
+26252,
+352
+],
+"tarse_G1": [
+26604,
+587
+],
+"coxa_G2": [
+27191,
+176
+],
+"trochanter_G2": [
+27367,
+84
+],
+"femur_G2": [
+27451,
+564
+],
+"patelle_G2": [
+28015,
+406
+],
+"tibia_G2": [
+28421,
+474
+],
+"metatarse_G2": [
+28895,
+352
+],
+"tarse_G2": [
+29247,
+587
+],
+"coxa_G3": [
+29834,
+176
+],
+"trochanter_G3": [
+30010,
+84
+],
+"femur_G3": [
+30094,
+564
+],
+"patelle_G3": [
+30658,
+406
+],
+"tibia_G3": [
+31064,
+474
+],
+"metatarse_G3": [
+31538,
+352
+],
+"tarse_G3": [
+31890,
+587
+],
+"coxa_G4": [
+32477,
+176
+],
+"trochanter_G4": [
+32653,
+84
+],
+"femur_G4": [
+32737,
+564
+],
+"patelle_G4": [
+33301,
+406
+],
+"tibia_G4": [
+33707,
+474
+],
+"metatarse_G4": [
+34181,
+352
+],
+"tarse_G4": [
+34533,
+587
+],
+"coxa_D1": [
+35120,
+176
+],
+"trochanter_D1": [
+35296,
+84
+],
+"femur_D1": [
+35380,
+564
+],
+"patelle_D1": [
+35944,
+406
+],
+"tibia_D1": [
+36350,
+474
+],
+"metatarse_D1": [
+36824,
+352
+],
+"tarse_D1": [
+37176,
+587
+],
+"coxa_D2": [
+37763,
+176
+],
+"trochanter_D2": [
+37939,
+84
+],
+"femur_D2": [
+38023,
+564
+],
+"patelle_D2": [
+38587,
+406
+],
+"tibia_D2": [
+38993,
+474
+],
+"metatarse_D2": [
+39467,
+352
+],
+"tarse_D2": [
+39819,
+587
+],
+"coxa_D3": [
+40406,
+176
+],
+"trochanter_D3": [
+40582,
+84
+],
+"femur_D3": [
+40666,
+564
+],
+"patelle_D3": [
+41230,
+406
+],
+"tibia_D3": [
+41636,
+474
+],
+"metatarse_D3": [
+42110,
+352
+],
+"tarse_D3": [
+42462,
+587
+],
+"coxa_D4": [
+43049,
+176
+],
+"trochanter_D4": [
+43225,
+84
+],
+"femur_D4": [
+43309,
+564
+],
+"patelle_D4": [
+43873,
+406
+],
+"tibia_D4": [
+44279,
+474
+],
+"metatarse_D4": [
+44753,
+352
+],
+"tarse_D4": [
+45105,
+587
+]
+},
+"b": {
+"carapace": [
+0,
+7980
+],
+"abdomen": [
+7980,
+20160
+],
+"pedicelle": [
+28140,
+150
+],
+"sternum": [
+28290,
+660
+],
+"chelicere_G": [
+28950,
+2328
+],
+"palpe_G": [
+31278,
+1608
+],
+"chelicere_D": [
+32886,
+2328
+],
+"palpe_D": [
+35214,
+1608
+],
+"coxa_G1": [
+36822,
+265
+],
+"trochanter_G1": [
+37087,
+126
+],
+"femur_G1": [
+37213,
+848
+],
+"patelle_G1": [
+38061,
+611
+],
+"tibia_G1": [
+38672,
+712
+],
+"metatarse_G1": [
+39384,
+529
+],
+"tarse_G1": [
+39913,
+881
+],
+"coxa_G2": [
+40794,
+265
+],
+"trochanter_G2": [
+41059,
+126
+],
+"femur_G2": [
+41185,
+848
+],
+"patelle_G2": [
+42033,
+611
+],
+"tibia_G2": [
+42644,
+712
+],
+"metatarse_G2": [
+43356,
+529
+],
+"tarse_G2": [
+43885,
+881
+],
+"coxa_G3": [
+44766,
+265
+],
+"trochanter_G3": [
+45031,
+126
+],
+"femur_G3": [
+45157,
+848
+],
+"patelle_G3": [
+46005,
+611
+],
+"tibia_G3": [
+46616,
+712
+],
+"metatarse_G3": [
+47328,
+529
+],
+"tarse_G3": [
+47857,
+881
+],
+"coxa_G4": [
+48738,
+265
+],
+"trochanter_G4": [
+49003,
+126
+],
+"femur_G4": [
+49129,
+848
+],
+"patelle_G4": [
+49977,
+611
+],
+"tibia_G4": [
+50588,
+712
+],
+"metatarse_G4": [
+51300,
+529
+],
+"tarse_G4": [
+51829,
+881
+],
+"coxa_D1": [
+52710,
+265
+],
+"trochanter_D1": [
+52975,
+126
+],
+"femur_D1": [
+53101,
+848
+],
+"patelle_D1": [
+53949,
+611
+],
+"tibia_D1": [
+54560,
+712
+],
+"metatarse_D1": [
+55272,
+529
+],
+"tarse_D1": [
+55801,
+881
+],
+"coxa_D2": [
+56682,
+265
+],
+"trochanter_D2": [
+56947,
+126
+],
+"femur_D2": [
+57073,
+848
+],
+"patelle_D2": [
+57921,
+611
+],
+"tibia_D2": [
+58532,
+712
+],
+"metatarse_D2": [
+59244,
+529
+],
+"tarse_D2": [
+59773,
+881
+],
+"coxa_D3": [
+60654,
+265
+],
+"trochanter_D3": [
+60919,
+126
+],
+"femur_D3": [
+61045,
+848
+],
+"patelle_D3": [
+61893,
+611
+],
+"tibia_D3": [
+62504,
+712
+],
+"metatarse_D3": [
+63216,
+529
+],
+"tarse_D3": [
+63745,
+881
+],
+"coxa_D4": [
+64626,
+265
+],
+"trochanter_D4": [
+64891,
+126
+],
+"femur_D4": [
+65017,
+848
+],
+"patelle_D4": [
+65865,
+611
+],
+"tibia_D4": [
+66476,
+712
+],
+"metatarse_D4": [
+67188,
+529
+],
+"tarse_D4": [
+67717,
+881
+]
+}
+},
+"poils": {
+"a": 45692,
+"b": 68598
+}
+}
+}

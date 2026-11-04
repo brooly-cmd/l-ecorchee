@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#dfe5e6">
+  <meta name="description" content="Une planche d’anatomie vivante. Explorez les 98 parties de Brachypelma hamorii, au bout du scalpel.">
+  <title>L’Écorchée — Brachypelma hamorii</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script>
+</head>
+<body>
+  <main id="experience" aria-label="Atlas anatomique interactif">
+    <canvas id="scene" tabindex="0" aria-label="Araignée en trois dimensions. Glisser pour tourner, pincer pour zoomer, toucher pour explorer. Les flèches tournent la vue, plus et moins changent le zoom."></canvas>
+    <div class="patina" aria-hidden="true"></div>
+    <header class="masthead">
+      <div class="identity"><h1>L’Écorchée</h1><p class="species">Brachypelma hamorii</p></div>
+      <button id="atlas-toggle" class="quiet-button" aria-controls="atlas" aria-expanded="false">Atlas <span aria-hidden="true">·</span> <span id="part-count">98 parties</span><span class="atlas-mark" aria-hidden="true">↗</span></button>
+    </header>
+    <span id="hover-name" class="hover-name" aria-hidden="true"></span>
+    <aside id="part-card" class="part-card" aria-labelledby="part-name" inert>
+      <button id="part-close" class="icon-button card-close" aria-label="Fermer la fiche">×</button>
+      <p id="part-group" class="eyebrow"></p><h2 id="part-name"></h2>
+      <p id="part-term" class="scientific"></p><p id="part-text"></p>
+      <button id="isolate" class="text-button">Isoler <span aria-hidden="true">↗</span></button>
+    </aside>
+    <section id="instrument" class="instrument" aria-label="Scalpel anatomique">
+      <p id="invitation" class="invitation">Glisse le scalpel.</p>
+      <div class="instrument-caption"><span>Le scalpel</span><output id="cut-state" for="scalpel">Intacte</output></div>
+      <div class="rail-wrap"><div class="rail" aria-hidden="true"><span id="rail-progress"></span><i id="rail-handle"></i></div><input id="scalpel" type="range" min="0" max="1000" value="0" step="1" aria-label="Avancer le plan de coupe" aria-valuetext="Araignée intacte"></div>
+      <div class="instrument-actions"><div class="axes" role="group" aria-label="Axe de coupe"><button data-axis="x" aria-pressed="true">En long</button><button data-axis="z" aria-pressed="false">En travers</button><button data-axis="y" aria-pressed="false">À plat</button></div><button id="explode" class="quiet-button" aria-pressed="false">Écarter <span class="explode-mark" aria-hidden="true">↗</span></button></div>
+    </section>
+    <button id="reset" class="reset-button" aria-label="Reconstituer et recadrer l’araignée">↺ <span>Reconstituer</span></button>
+    <aside id="atlas" class="atlas" aria-labelledby="atlas-title" inert>
+      <div class="atlas-heading"><div><p class="eyebrow">Brachypelma hamorii</p><h2 id="atlas-title">L’Atlas</h2></div><button id="atlas-close" class="icon-button" aria-label="Fermer l’Atlas">×</button></div>
+      <label class="search"><span class="sr-only">Chercher une partie</span><input id="atlas-search" type="search" placeholder="Chercher une partie…" autocomplete="off"></label>
+      <div id="atlas-list" class="atlas-list" tabindex="0"></div>
+      <p id="atlas-empty" hidden>Aucune partie trouvée.</p>
+    </aside>
+    <div id="loading" class="loading" role="status"><div><p class="loading-title">L’Écorchée</p><p>La matière prend vie.</p><span id="loading-percent">0 %</span><div class="loading-track"><i id="loading-bar"></i></div></div></div>
+    <section id="fallback" class="fallback" hidden><img src="assets/secours.png" alt="Mygale noire aux genoux orange sur une dalle claire"><div><h2>L’Écorchée</h2><p id="fallback-message">Cette vue 3D n’est pas disponible dans ce navigateur.</p><button id="retry">Réessayer</button></div></section>
+    <p id="announcer" class="sr-only" role="status" aria-live="polite"></p>
+    <noscript><div class="no-script"><img src="assets/secours.png" alt="Brachypelma hamorii"><p>Active JavaScript pour explorer L’Écorchée.</p></div></noscript>
+  </main>
+  <script src="vendor/lenis.min.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
