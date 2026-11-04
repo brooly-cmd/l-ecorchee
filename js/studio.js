@@ -9,6 +9,8 @@ export async function studio(canvas,manager){
   renderer.toneMapping=T.ACESFilmicToneMapping;
   renderer.toneMappingExposure=1;
   renderer.shadowMap.enabled=true;
+  renderer.shadowMap.autoUpdate=false;
+  renderer.shadowMap.needsUpdate=true;
   renderer.shadowMap.type=T.PCFShadowMap;
   const scene=new T.Scene();
   scene.background=new T.Color('#dfe5e6');

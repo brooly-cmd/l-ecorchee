@@ -6,7 +6,7 @@ import {sectionMaterial} from './materials.js';
 // This avoids an ellipsoid approximation, a second render pass, or a per-pixel triangle search.
 class CuticleEdges {
   constructor(parts){
-    this.parts=parts;this.axis={value:0};this.coordinate=Infinity;this.lastUpdate=0;
+    this.parts=parts;this.axis={value:0};this.strength={value:1};this.coordinate=Infinity;this.lastUpdate=0;
     this.canvas=document.createElement('canvas');this.canvas.width=this.canvas.height=innerWidth<700?1024:2048;
     this.ctx=this.canvas.getContext('2d',{alpha:false});
     this.texture=new T.CanvasTexture(this.canvas);this.texture.colorSpace=T.NoColorSpace;
@@ -50,39 +50,73 @@ class CuticleEdges {
 // Adapted from the MIT Three.js r187 example webgl_clipping_stencil.
 export class Sections {
   constructor(scene,parts,plane){
-    this.plane=plane;this.entries=[];this.single=new Map();this.box=new T.Box3();this.root=new T.Group();this.root.name='sections';scene.add(this.root);
+    this.plane=plane;this.entries=[];this.single=new Map();this.box=new T.Box3();this.capTarget=new T.Vector3();this.root=new T.Group();this.root.name='sections';scene.add(this.root);
     const cuticle=parts.filter(p=>p.data.mat==='cuticule');
     this.edge=new CuticleEdges(cuticle);
-    const proxies=cuticle.map(p=>{const g=new T.BufferGeometry();g.setAttribute('position',p.body.geometry.getAttribute('position'));if(p.body.geometry.index)g.setIndex(p.body.geometry.index);return g.index?g.toNonIndexed():g;});
+    const proxies=cuticle.map(p=>{const g=new T.BufferGeometry();g.setAttribute('position',p.body.geometry.getAttribute('position'));if(p.body.geometry.index)g.setIndex(p.body.geometry.index);return g;});
     const merged=mergeGeometries(proxies,false);
     this.add(merged,new T.Color('#1a55c9'),{value:1},null,1,true);
+    // Conservative prebuilt slices: retain complete closed parts intersecting a
+    // slice, and omit all other walls. The exact plane still clips each triangle.
+    // Index buffers share positions, are uploaded under the veil, then only selected.
+    this.slices=[0,1,2].map(axis=>{
+      const min=Math.min(...cuticle.map(p=>p.data.mini[axis]))-.001,max=Math.max(...cuticle.map(p=>p.data.maxi[axis]))+.001;
+      const geometries=[];
+      for(let bin=0;bin<32;bin++){
+        const low=min+(max-min)*bin/32,high=min+(max-min)*(bin+1)/32;
+        const ranges=[];let start=0,count=0;
+        for(const p of cuticle){const n=p.body.geometry.index.count;if(p.data.mini[axis]<=high&&p.data.maxi[axis]>=low){ranges.push([start,n]);count+=n;}start+=n;}
+        const indices=new Uint32Array(count);let offset=0;
+        for(const [start,n] of ranges){indices.set(merged.index.array.subarray(start,start+n),offset);offset+=n;}
+        const g=new T.BufferGeometry();g.setAttribute('position',merged.getAttribute('position'));g.setIndex(new T.BufferAttribute(indices,1));
+        g.boundingBox=merged.boundingBox;g.boundingSphere=merged.boundingSphere;geometries.push(g);
+      }
+      return {min,max,geometries};
+    });
     for(const g of proxies)g.dispose();
     let order=5;
-    for(const p of parts.filter(p=>p.data.mat!=='cuticule')){
+    for(const p of parts){
       const color=p.body.geometry.getAttribute('color'),average=new T.Color(0,0,0);let n=0;
       if(color)for(let i=0;i<color.count;i+=Math.max(1,Math.floor(color.count/80))){average.r+=color.getX(i);average.g+=color.getY(i);average.b+=color.getZ(i);n++;}
       if(n)average.multiplyScalar(1/n);else average.set('#bd8171');
       average.multiplyScalar(1.06);
-      this.add(p.body.geometry,average,p.focus,p,order,false);order+=4;
+      const blue=p.data.mat==='cuticule';
+      this.add(p.body.geometry,blue?new T.Color('#1a55c9'):average,p.focus,p,order,blue);
+      if(blue)this.single.set(p,this.entries.at(-1));order+=4;
     }
   }
   add(geometry,color,focus,part,order,blue){
     const group=new T.Group();this.root.add(group);
     const base={depthWrite:false,depthTest:false,colorWrite:false,stencilWrite:true,stencilFunc:T.AlwaysStencilFunc,clippingPlanes:[this.plane]};
-    const back=new T.MeshPhysicalMaterial({...base,side:T.BackSide,stencilFail:T.IncrementWrapStencilOp,stencilZFail:T.IncrementWrapStencilOp,stencilZPass:T.IncrementWrapStencilOp});
-    const front=new T.MeshPhysicalMaterial({...base,side:T.FrontSide,stencilFail:T.DecrementWrapStencilOp,stencilZFail:T.DecrementWrapStencilOp,stencilZPass:T.DecrementWrapStencilOp});
+    // Invisible stencil writers need clipping alone, never physical lighting/noise/HDRI.
+    const stencil={...base,clipping:true,
+      vertexShader:'#include <clipping_planes_pars_vertex>\nvoid main(){vec4 mvPosition=modelViewMatrix*vec4(position,1.0);gl_Position=projectionMatrix*mvPosition;\n#include <clipping_planes_vertex>\n}',
+      fragmentShader:'#include <clipping_planes_pars_fragment>\nvoid main(){\n#include <clipping_planes_fragment>\ngl_FragColor=vec4(0.0);}'
+    };
+    const back=new T.ShaderMaterial({...stencil,side:T.BackSide,stencilFail:T.IncrementWrapStencilOp,stencilZFail:T.IncrementWrapStencilOp,stencilZPass:T.IncrementWrapStencilOp});
+    const front=new T.ShaderMaterial({...stencil,side:T.FrontSide,stencilFail:T.DecrementWrapStencilOp,stencilZFail:T.DecrementWrapStencilOp,stencilZPass:T.DecrementWrapStencilOp});
     const b=new T.Mesh(geometry,back),f=new T.Mesh(geometry,front);b.renderOrder=order;f.renderOrder=order+1;group.add(b,f);
     const cap=new T.Mesh(new T.PlaneGeometry(24,24),sectionMaterial(color,focus,blue,this.edge));cap.renderOrder=order+2;cap.frustumCulled=false;cap.onAfterRender=renderer=>renderer.clearStencil();group.add(cap);
     this.entries.push({group,b,f,cap,part});
   }
-  update(active,axis,coordinate,isolated){
+  preload(renderer,scene,camera){
+    const {b}=this.entries[0],warm=new T.Group();
+    for(const slice of this.slices)for(const g of slice.geometries){const mesh=new T.Mesh(g,b.material);mesh.frustumCulled=false;warm.add(mesh);}
+    scene.add(warm);renderer.render(scene,camera);scene.remove(warm);
+  }
+  update(active,axis,coordinate,isolated,interacting=false,dt=1/60,now=performance.now()){
     this.root.visible=active;
     if(!active)return;
-    this.edge.update(axis,coordinate,isolated);
-    if(isolated?.data.mat==='cuticule'&&!this.single.has(isolated)){
-      this.add(isolated.body.geometry,new T.Color('#1a55c9'),isolated.focus,isolated,1,true);
-      this.single.set(isolated,this.entries.at(-1));
-    }
+    const slice=this.slices[axis],bin=Math.max(0,Math.min(31,Math.floor((coordinate-slice.min)/(slice.max-slice.min)*32)));
+    this.entries[0].b.geometry=this.entries[0].f.geometry=slice.geometries[bin];
+    // Pigment tracing and canvas uploads are cosmetic, separate from the exact stencil seal.
+    // Fade that cosmetic rim out in motion; rebuild only after the plane has settled.
+    const moved=this.lastAxis!==axis||Math.abs(coordinate-(this.lastCoordinate??Infinity))>.00025;
+    if(interacting||moved)this.edgeReadyAt=now+250;
+    this.lastAxis=axis;this.lastCoordinate=coordinate;
+    const ready=!interacting&&now>=(this.edgeReadyAt||0);
+    if(ready)this.edge.update(axis,coordinate,isolated);
+    this.edge.strength.value+=(Number(ready)-this.edge.strength.value)*(1-Math.exp(-dt*8));
     for(const e of this.entries){
       const p=e.part;
       e.group.visible=p?p.group.visible&&(!isolated||p===isolated):!isolated;
@@ -93,7 +127,7 @@ export class Sections {
       }
       if(!e.group.visible)continue;
       if(p){e.b.matrixAutoUpdate=e.f.matrixAutoUpdate=false;e.b.matrix.copy(p.group.matrixWorld);e.f.matrix.copy(p.group.matrixWorld);}
-      this.plane.coplanarPoint(e.cap.position);e.cap.lookAt(e.cap.position.clone().sub(this.plane.normal));
+      this.plane.coplanarPoint(e.cap.position);e.cap.lookAt(this.capTarget.copy(e.cap.position).sub(this.plane.normal));
     }
   }
 }

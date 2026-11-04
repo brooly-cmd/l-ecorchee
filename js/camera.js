@@ -11,7 +11,7 @@ export class CameraRig {
   clamp(){this.target.phi=T.MathUtils.clamp(this.target.phi,.16,1.38);this.target.radius=T.MathUtils.clamp(this.target.radius,.38,34);}
   down(e){this.onGesture();this.canvas.setPointerCapture(e.pointerId);this.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY,ox:e.clientX,oy:e.clientY});this.moved=false;if(this.pointers.size>1){this.pinch=this.distance();this.moved=true;}this.canvas.classList.add('dragging');}
   distance(){const a=[...this.pointers.values()];return a.length===2?Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y):0;}
-  move(e){this.mouse.set(e.clientX/innerWidth-.5,e.clientY/innerHeight-.5);const p=this.pointers.get(e.pointerId);if(!p)return;const dx=e.clientX-p.x,dy=e.clientY-p.y;p.x=e.clientX;p.y=e.clientY;if(Math.hypot(p.x-p.ox,p.y-p.oy)>6)this.moved=true;if(this.pointers.size===2){const distance=this.distance();if(this.pinch>0&&distance>0)this.target.radius*=this.pinch/distance;this.pinch=distance;}else if(this.moved){this.target.theta-=dx*.006;this.target.phi-=dy*.005;}this.clamp();}
+  move(e){this.mouse.set(e.clientX/innerWidth-.5,e.clientY/innerHeight-.5);const p=this.pointers.get(e.pointerId);if(!p)return;const dx=e.clientX-p.x,dy=e.clientY-p.y;p.x=e.clientX;p.y=e.clientY;if(Math.hypot(p.x-p.ox,p.y-p.oy)>6)this.moved=true;if(this.pointers.size===2){const distance=this.distance();if(this.pinch>0&&distance>0)this.pendingZoom=(this.pendingZoom||1)*this.pinch/distance;this.pinch=distance;}else if(this.moved){this.pendingX=(this.pendingX||0)+dx;this.pendingY=(this.pendingY||0)+dy;}}
   up(e,cancel=false){const p=this.pointers.get(e.pointerId);if(!p)return;const tap=!cancel&&!this.moved&&this.pointers.size===1&&Math.hypot(p.x-p.ox,p.y-p.oy)<=6;this.pointers.delete(e.pointerId);if(this.pointers.size)this.moved=true;else this.canvas.classList.remove('dragging');if(tap){const now=performance.now();if(now-this.lastTap<330){this.frame();this.lastTap=0;}else{this.lastTap=now;this.onTap({x:e.clientX,y:e.clientY});}}}
   specimen(parts){
     this.homePoints=[];this.spreadPoints=[];
@@ -71,6 +71,8 @@ export class CameraRig {
     this.target.radius=Math.max(.48,this.target.radius);
   }
   update(dt,time,reduce,cardOpen){
+    this.target.theta-=(this.pendingX||0)*.006;this.target.phi-=(this.pendingY||0)*.005;this.target.radius*=this.pendingZoom||1;
+    this.pendingX=this.pendingY=0;this.pendingZoom=1;this.clamp();
     const damping=1-Math.pow(1-.065,dt*60);this.theta=T.MathUtils.lerp(this.theta,this.target.theta,damping);this.phi=T.MathUtils.lerp(this.phi,this.target.phi,damping);this.radius=T.MathUtils.lerp(this.radius,this.target.radius,damping);this.look.lerp(this.lookTarget,damping);this.parallax.lerp(this.mouse,damping);
     const breathing=reduce||this.pointers.size?0:Math.sin(time*.27)*.008;const theta=this.theta+(innerWidth>700?this.parallax.x*.045:0);const phi=this.phi+breathing+(innerWidth>700?this.parallax.y*.025:0);
     this.camera.position.set(this.radius*Math.sin(phi)*Math.sin(theta),this.radius*Math.cos(phi),this.radius*Math.sin(phi)*Math.cos(theta)).add(this.look);this.camera.lookAt(this.look);

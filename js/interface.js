@@ -58,6 +58,8 @@ export class Interface {
     this.entries.forEach(e=>e.button.setAttribute('aria-pressed',String(e.button.dataset.part===part?.data.id)));
   }
   rail(value,axis,exploded){
+    if(value===this.railValue&&axis===this.railAxis&&exploded===this.railExploded)return;
+    this.railValue=value;this.railAxis=axis;this.railExploded=exploded;
     const percentage=Math.round(value*100);$('rail-handle').style.left=`${value*100}%`;$('rail-progress').style.width=`${value*100}%`;
     const label=exploded?'Éclatée':value<.002?'Intacte':`Coupe · ${percentage} %`;
     $('cut-state').textContent=label;$('scalpel').setAttribute('aria-valuetext',label);

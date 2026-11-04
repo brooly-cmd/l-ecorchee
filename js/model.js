@@ -54,6 +54,7 @@ export async function loadModel(scene,plane,maps,manager,mobile,progress){
       if(shared&&range?.[1]){const mesh=hairs(shared,range,d,plane,focus,data.poils.echelle);mesh.userData.batch=key;group.add(mesh);part.hairs.push(mesh);}
     }
     part.exploded=explosion(d,index);
+    group.traverse(o=>{if(o!==group){o.updateMatrix();o.matrixAutoUpdate=false;}});
     return part;
   });
   draco.dispose();progress(82);

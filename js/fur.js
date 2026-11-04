@@ -18,12 +18,13 @@ export function shells(geometry,part,plane,focus,comb){
   for(const key in geometry.attributes)geo.setAttribute(key,geometry.attributes[key]);
   geo.setAttribute('furLayer',new T.InstancedBufferAttribute(Float32Array.from({length:14},(_,i)=>(i+1)/14),1));
   geo.setAttribute('furBase',new T.InstancedBufferAttribute(Float32Array.from({length:14},(_,i)=>i===0?1:0),1));
-  const nearLength={value:1};
+  const nearLength={value:1},detail={value:1};
   const m=new T.MeshPhysicalMaterial({vertexColors:true,roughness:.86,clearcoat:0,specularIntensity:.18,sheen:.65,sheenColor:'#80756c',sheenRoughness:.8,side:T.FrontSide,clippingPlanes:[plane]});
   m.onBeforeCompile=shader=>{
     // Only the short, dark undercoat uses shells; supplied curved strands carry the coat.
     shader.uniforms.uFurLength={value:part.fourrure_longueur*.38};
     shader.uniforms.uNearLength=nearLength;
+    shader.uniforms.uCoatDetail=detail;
     shader.uniforms.uFurComb={value:comb};shader.uniforms.uFurCenter={value:new T.Vector3(...part.centre)};shader.uniforms.uFurRadial={value:part.id==='carapace'?1:0};
     shader.vertexShader='attribute float furLayer,furBase; uniform float uFurLength,uNearLength,uFurRadial;uniform vec3 uFurComb,uFurCenter; varying float vFurHeight,vFurBase; varying vec3 vFurRoot; varying vec3 vFurNormal,vFibreTangent,vFurFlow;\n'+shader.vertexShader;
     shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>',`#include <begin_vertex>
@@ -34,7 +35,7 @@ export function shells(geometry,part,plane,focus,comb){
       transformed+=(normal*furLayer+furFlow*furLayer*furLayer*.55)*uFurLength*uNearLength;
       transformed=mix(transformed,position+normal*.0006,furBase);
       vFibreTangent=normalMatrix*normalize(normal+furFlow*furLayer*1.1);`);
-    shader.fragmentShader=`varying float vFurHeight,vFurBase; varying vec3 vFurRoot; varying vec3 vFurNormal,vFibreTangent,vFurFlow;\n${organicGLSL}\n${furPigmentGLSL}\n`+shader.fragmentShader;
+    shader.fragmentShader=`uniform float uCoatDetail;varying float vFurHeight,vFurBase; varying vec3 vFurRoot; varying vec3 vFurNormal,vFibreTangent,vFurFlow;\n${organicGLSL}\n${furPigmentGLSL}\n`+shader.fragmentShader;
     focusPatch(shader,focus);
     shader.fragmentShader=shader.fragmentShader.replace('#include <clipping_planes_fragment>',`#include <clipping_planes_fragment>
       // A frequency-modulated strand field, broken at irregular lengths. Unlike a noise
@@ -54,7 +55,7 @@ export function shells(geometry,part,plane,focus,comb){
       // Unresolved outer fibres disappear into the shaded base, never into a pale alpha veil.
       float footprint=fwidth(phase);
       furCoverage*=1.0-smoothstep(1.2,3.0,footprint);
-      if(vFurBase<.5&&(furFace<.22||furCoverage<.54))discard;`);
+      if(vFurBase<.5&&(vFurHeight>uCoatDetail||furFace<.22||furCoverage<.54))discard;`);
     shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
       vec3 undercoatDye=furPigment(diffuseColor.rgb,vFurRoot);
       vec3 undercoatRoot=mix(undercoatDye*.23,vec3(.012,.009,.007),.4);
@@ -74,6 +75,7 @@ export function shells(geometry,part,plane,focus,comb){
   };
   m.customProgramCacheKey=()=> 'ecorchee-fur-shell-v4';
   const mesh=new T.Mesh(geo,m);mesh.name=`fourrure_${part.id}`;mesh.renderOrder=1002;
+  mesh.userData.parameters={comb};mesh.userData.detail=detail;
   const furCenter=new T.Vector3(...part.centre),worldCenter=new T.Vector3();
   mesh.onBeforeRender=(_renderer,_scene,camera)=>{
     worldCenter.copy(furCenter).applyMatrix4(mesh.matrixWorld);
@@ -120,7 +122,7 @@ export function hairBuffer(buffer,format){
 }
 export function hairs(shared,range,part,plane,focus,scale=8,encoded=true){
   const indicesPerHair=shared.indicesPerHair;
-  const viewport=new T.Vector2();
+  const viewport=new T.Vector2(),renderViewport=new T.Vector4();
   const geo=new T.BufferGeometry();for(const key in shared.attributes)geo.setAttribute(key,shared.attributes[key]);geo.setIndex(shared.index);geo.setDrawRange(range[0]*indicesPerHair,range[1]*indicesPerHair);
   geo.boundingBox=new T.Box3(new T.Vector3(...part.mini),new T.Vector3(...part.maxi)).expandByScalar(.24);geo.boundingSphere=new T.Sphere();geo.boundingBox.getBoundingSphere(geo.boundingSphere);
   const m=new T.MeshStandardMaterial({vertexColors:true,roughness:.45,metalness:0,alphaToCoverage:true,side:T.DoubleSide,clippingPlanes:[plane]});
@@ -155,7 +157,7 @@ export function hairs(shared,range,part,plane,focus,scale=8,encoded=true){
   };
   m.customProgramCacheKey=()=> `ecorchee-hairs-v4-${encoded}`;
   const mesh=new T.Mesh(geo,m);mesh.name=`poils_${part.id}`;mesh.renderOrder=1003;mesh.userData.fullRange=range;mesh.userData.indicesPerHair=indicesPerHair;
-  if(encoded)mesh.onBeforeRender=renderer=>renderer.getDrawingBufferSize(viewport);
+  if(encoded)mesh.onBeforeRender=renderer=>{renderer.getCurrentViewport(renderViewport);viewport.set(renderViewport.z,renderViewport.w);};
   return mesh;
 }
 export function setShellCount(mesh,count){

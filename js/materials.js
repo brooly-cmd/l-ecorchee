@@ -141,7 +141,7 @@ export function sectionMaterial(color,focus,blue=false,edge=null){
     shader.vertexShader='varying vec2 vTissue;varying vec3 vCapWorld;\n'+shader.vertexShader;
     shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\nvTissue=position.xy;vCapWorld=(modelMatrix*vec4(position,1.0)).xyz;');
     shader.fragmentShader=`varying vec2 vTissue;varying vec3 vCapWorld;\n${organicGLSL}\n`+shader.fragmentShader;
-    if(blue&&edge){Object.assign(shader.uniforms,{uEdgeMap:{value:edge.texture},uSectionAxis:edge.axis});shader.fragmentShader='uniform sampler2D uEdgeMap;uniform int uSectionAxis;\n'+shader.fragmentShader;}
+    if(blue&&edge){Object.assign(shader.uniforms,{uEdgeMap:{value:edge.texture},uSectionAxis:edge.axis,uEdgeStrength:edge.strength});shader.fragmentShader='uniform sampler2D uEdgeMap;uniform int uSectionAxis;uniform float uEdgeStrength;\n'+shader.fragmentShader;}
     shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
       vec3 cellP=vec3(vTissue*135.0,7.0);
       float cell=tissueNoise(cellP),marble=tissueNoise(vec3(vTissue*28.0,4.0));
@@ -151,7 +151,7 @@ export function sectionMaterial(color,focus,blue=false,edge=null){
       float cutHeight=cell*.005+marble*.009;
       diffuseColor.rgb*=mix(.76,1.1,marble)*(.91+.17*cell);
       ${blue?`vec2 edgeUV=(uSectionAxis==0?vCapWorld.zy:(uSectionAxis==1?vCapWorld.xz:vCapWorld.xy))/10.0+.5;
-        float edgeBlack=texture2D(uEdgeMap,edgeUV).r;
+        float edgeBlack=texture2D(uEdgeMap,edgeUV).r*uEdgeStrength;
         diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.006,.009,.014),edgeBlack*.94);`:`diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(.3,.06,.1),vessels*.7);`}`);
     shader.fragmentShader=shader.fragmentShader.replace('#include <roughnessmap_fragment>','#include <roughnessmap_fragment>\nroughnessFactor=clamp(roughnessFactor+(cell-.5)*.17,.27,.58);');
     shader.fragmentShader=shader.fragmentShader.replace('#include <normal_fragment_maps>','#include <normal_fragment_maps>\nnormal=tissueBump(normal,-vViewPosition,cutHeight,.18);');
