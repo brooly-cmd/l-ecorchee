@@ -53,6 +53,16 @@ export class Batches {
       // Round-robin strands keep EVERY part represented even at 10% density.
       let offset=0;for(let round=0;round<max;round++)for(const [start,count] of ranges)if(round<count){const i=(start+round)*stride;indices.set(source.subarray(i,i+stride),offset);offset+=stride;}
       const mesh=hairs({attributes:first.geometry.attributes,index:new T.BufferAttribute(indices,1),indicesPerHair:stride},[0,total],{id:'fusion',mini:[-5,-2,-5],maxi:[5,5,5]},plane,{value:1});
+      // At partial density, fill every part by the SAME fraction. The old prefix
+      // filled small leg segments first and left the abdomen almost bare.
+      // Keep the original complete index (and exact RTX drawing order) intact.
+      const balanced=new Uint32Array(indices.length);offset=0;
+      for(let round=0;round<max;round++)for(const [start,count] of ranges){
+        const before=Math.floor(round*count/max),after=Math.floor((round+1)*count/max);
+        if(after>before){const i=(start+before)*stride;balanced.set(source.subarray(i,i+stride),offset);offset+=stride;}
+      }
+      mesh.userData.completeIndex=mesh.geometry.index;
+      mesh.userData.balancedIndex=new T.BufferAttribute(balanced,1);
       mesh.userData.batch=batch;this.hairs.push(mesh);this.root.add(mesh);
     }
     this.root.visible=false;

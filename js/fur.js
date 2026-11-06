@@ -20,11 +20,13 @@ export function shells(geometry,part,plane,focus,comb){
   geo.setAttribute('furBase',new T.InstancedBufferAttribute(Float32Array.from({length:14},(_,i)=>i===0?1:0),1));
   const nearLength={value:1},detail={value:1};
   const m=new T.MeshPhysicalMaterial({vertexColors:true,roughness:.86,clearcoat:0,specularIntensity:.18,sheen:.65,sheenColor:'#80756c',sheenRoughness:.8,side:T.FrontSide,clippingPlanes:[plane]});
+  const reducedCoat={value:0};m.userData.reducedCoat=reducedCoat;
   m.onBeforeCompile=shader=>{
     // Only the short, dark undercoat uses shells; supplied curved strands carry the coat.
     shader.uniforms.uFurLength={value:part.fourrure_longueur*.38};
     shader.uniforms.uNearLength=nearLength;
     shader.uniforms.uCoatDetail=detail;
+    shader.uniforms.uReducedCoat=reducedCoat;
     shader.uniforms.uFurComb={value:comb};shader.uniforms.uFurCenter={value:new T.Vector3(...part.centre)};shader.uniforms.uFurRadial={value:part.id==='carapace'?1:0};
     shader.vertexShader='attribute float furLayer,furBase; uniform float uFurLength,uNearLength,uFurRadial;uniform vec3 uFurComb,uFurCenter; varying float vFurHeight,vFurBase; varying vec3 vFurRoot; varying vec3 vFurNormal,vFibreTangent,vFurFlow;\n'+shader.vertexShader;
     shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>',`#include <begin_vertex>
@@ -35,7 +37,7 @@ export function shells(geometry,part,plane,focus,comb){
       transformed+=(normal*furLayer+furFlow*furLayer*furLayer*.55)*uFurLength*uNearLength;
       transformed=mix(transformed,position+normal*.0006,furBase);
       vFibreTangent=normalMatrix*normalize(normal+furFlow*furLayer*1.1);`);
-    shader.fragmentShader=`uniform float uCoatDetail;varying float vFurHeight,vFurBase; varying vec3 vFurRoot; varying vec3 vFurNormal,vFibreTangent,vFurFlow;\n${organicGLSL}\n${furPigmentGLSL}\n`+shader.fragmentShader;
+    shader.fragmentShader=`uniform float uCoatDetail,uReducedCoat;varying float vFurHeight,vFurBase; varying vec3 vFurRoot; varying vec3 vFurNormal,vFibreTangent,vFurFlow;\n${organicGLSL}\n${furPigmentGLSL}\n`+shader.fragmentShader;
     focusPatch(shader,focus);
     shader.fragmentShader=shader.fragmentShader.replace('#include <clipping_planes_fragment>',`#include <clipping_planes_fragment>
       // A frequency-modulated strand field, broken at irregular lengths. Unlike a noise
@@ -45,10 +47,16 @@ export function shells(geometry,part,plane,focus,comb){
       vec2 flow=normalize((furN.y>max(furN.x,furN.z)?vFurFlow.xz:(furN.x>furN.z?vFurFlow.zy:vFurFlow.xy))+vec2(.00001));
       float across=dot(furPlane,vec2(flow.y,-flow.x)),along=dot(furPlane,flow);
       float phase=across*2900.0+tissueNoise(vFurRoot*75.0)*24.0+tissueNoise(vFurRoot*480.0)*4.0;
+      #ifdef REDUCED_COAT
+        phase=across*2200.0+tissueNoise(vFurRoot*75.0)*12.0;
+      #endif
       float strand=.5+.5*sin(phase);
       float threshold=mix(.30,.94,pow(vFurHeight,.8));
       float furCoverage=step(threshold,strand);
       float endNoise=tissueNoise(vec3(across*1900.0,along*260.0,17.0));
+      #ifdef REDUCED_COAT
+        endNoise=tissueHash(floor(vec3(across*1900.0,along*260.0,17.0)));
+      #endif
       furCoverage*=smoothstep(vFurHeight*.72-.12,vFurHeight*.72+.12,endNoise);
       float furFace=abs(dot(normalize(vNormal),normalize(vViewPosition)));
       furCoverage*=smoothstep(.025,.28,furFace)*mix(1.0,.55,vFurHeight);
@@ -58,11 +66,19 @@ export function shells(geometry,part,plane,focus,comb){
       if(vFurBase<.5&&(vFurHeight>uCoatDetail||furFace<.22||furCoverage<.54))discard;`);
     shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
       vec3 undercoatDye=furPigment(diffuseColor.rgb,vFurRoot);
+      #ifdef REDUCED_COAT
+        float skinRust=smoothstep(.025,.16,diffuseColor.r-diffuseColor.g);
+        undercoatDye=mix(max(diffuseColor.rgb*1.75,vec3(.034,.028,.024)),diffuseColor.rgb*vec3(.64,.64,.7),skinRust)*mix(.60,1.16,tissueNoise(vFurRoot*36.0));
+      #endif
       vec3 undercoatRoot=mix(undercoatDye*.23,vec3(.012,.009,.007),.4);
       float velvetGrain=tissueNoise(vFurRoot*820.0);
+      #ifdef REDUCED_COAT
+        velvetGrain=.5;
+      #endif
       float velvetResolved=1.0-smoothstep(1.0,2.8,footprint);
       float velvetFibre=mix(velvetGrain,strand,velvetResolved*.65);
       diffuseColor.rgb=mix(undercoatRoot,undercoatDye*.62,pow(vFurHeight,1.4)*(1.0-vFurBase));
+      if(uReducedCoat>.5)diffuseColor.rgb=undercoatDye*mix(.70,.88,vFurHeight*(1.0-vFurBase));
       diffuseColor.rgb*=mix(.72,1.3,velvetFibre);`);
     shader.fragmentShader=shader.fragmentShader.replace('#include <normal_fragment_maps>',`#include <normal_fragment_maps>
       vec3 furAcross=cross(normal,normalize(vFibreTangent));furAcross/=max(length(furAcross),.0001);
@@ -71,7 +87,9 @@ export function shells(geometry,part,plane,focus,comb){
     shader.fragmentShader=shader.fragmentShader.replace('#include <aomap_fragment>',`#include <aomap_fragment>
       reflectedLight.indirectDiffuse*=mix(.88,1.0,vFurHeight);
       reflectedLight.directDiffuse*=mix(.92,1.0,vFurHeight);`);
-    shader.fragmentShader=shader.fragmentShader.replace('#include <opaque_fragment>',`if(vFurBase<.5){${fibreLight}}\n#include <opaque_fragment>`);
+    shader.fragmentShader=shader.fragmentShader.replace('#include <opaque_fragment>',`if(vFurBase<.5){${fibreLight}}
+      else if(uReducedCoat>.5){outgoingLight+=diffuseColor.rgb*.20*pow(1.0-abs(dot(normal,normalize(vViewPosition))),3.0);}
+      #include <opaque_fragment>`);
   };
   m.customProgramCacheKey=()=> 'ecorchee-fur-shell-v4';
   const mesh=new T.Mesh(geo,m);mesh.name=`fourrure_${part.id}`;mesh.renderOrder=1002;
@@ -122,7 +140,7 @@ export function hairBuffer(buffer,format){
 }
 export function hairs(shared,range,part,plane,focus,scale=8,encoded=true){
   const indicesPerHair=shared.indicesPerHair;
-  const viewport=new T.Vector2(),renderViewport=new T.Vector4();
+  const viewport=new T.Vector2(),renderViewport=new T.Vector4(),minimumHalf={value:.3};
   const geo=new T.BufferGeometry();for(const key in shared.attributes)geo.setAttribute(key,shared.attributes[key]);geo.setIndex(shared.index);geo.setDrawRange(range[0]*indicesPerHair,range[1]*indicesPerHair);
   geo.boundingBox=new T.Box3(new T.Vector3(...part.mini),new T.Vector3(...part.maxi)).expandByScalar(.24);geo.boundingSphere=new T.Sphere();geo.boundingBox.getBoundingSphere(geo.boundingSphere);
   const m=new T.MeshStandardMaterial({vertexColors:true,roughness:.45,metalness:0,alphaToCoverage:true,side:T.DoubleSide,clippingPlanes:[plane]});
@@ -133,14 +151,15 @@ export function hairs(shared,range,part,plane,focus,scale=8,encoded=true){
     shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>',`#include <begin_vertex>\ntransformed*=uHairScale;vHairRoot=transformed;vFibreTangent=normalMatrix*fibreTangent;vHairHeight=fibreHeight;vHairSide=fibreSide;`);
     if(encoded){
       shader.uniforms.uHairViewport={value:viewport};
-      shader.vertexShader='attribute vec3 fibreHalfWidth;uniform vec2 uHairViewport;\n'+shader.vertexShader;
+      shader.uniforms.uHairMinimumHalf=minimumHalf;
+      shader.vertexShader='attribute vec3 fibreHalfWidth;uniform vec2 uHairViewport;uniform float uHairMinimumHalf;\n'+shader.vertexShader;
       // Keep distant strands continuous under MSAA and refine the ribbon width up close.
       shader.vertexShader=shader.vertexShader.replace('#include <project_vertex>',`
         vec3 strandHalf=fibreHalfWidth*uHairScale;
         vec4 strandCenter=projectionMatrix*modelViewMatrix*vec4(transformed-strandHalf,1.0);
         vec4 strandEdge=projectionMatrix*modelViewMatrix*vec4(transformed,1.0);
         float pixelHalf=length((strandEdge.xy/strandEdge.w-strandCenter.xy/strandCenter.w)*uHairViewport)*.5;
-        float strandWidth=clamp(.3/max(pixelHalf,.0001),.5,6.0);
+        float strandWidth=clamp(uHairMinimumHalf/max(pixelHalf,.0001),.5,8.0);
         transformed+=strandHalf*(strandWidth-1.0);
         #include <project_vertex>`);
     }
@@ -149,15 +168,21 @@ export function hairs(shared,range,part,plane,focus,scale=8,encoded=true){
     shader.fragmentShader=`varying vec3 vFibreTangent,vHairRoot;varying float vHairHeight,vHairSide;\n${organicGLSL}\n${furPigmentGLSL}\n`+shader.fragmentShader;
     shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
       diffuseColor.rgb=furPigment(diffuseColor.rgb,vHairRoot)*mix(.48,1.45,pow(vHairHeight,.7));
+      // Geometric MSAA resolves the widened subpixel ribbon. Expanding this alpha
+      // ramp with fwidth(side) would erase distant hairs before MSAA could see them.
       diffuseColor.a*=1.0-smoothstep(.65,1.0,abs(vHairSide));`);
     if(!encoded)shader.fragmentShader=shader.fragmentShader.replace('#include <normal_fragment_maps>',`#include <normal_fragment_maps>
       vec3 hairAcross=normalize(cross(normal,normalize(vFibreTangent)));
       normal=normalize(normal*sqrt(max(.05,1.0-vHairSide*vHairSide))+hairAcross*vHairSide*.65);`);
     shader.fragmentShader=shader.fragmentShader.replace('#include <opaque_fragment>',`${fibreLight}\n#include <opaque_fragment>`);
   };
-  m.customProgramCacheKey=()=> `ecorchee-hairs-v4-${encoded}`;
+  m.customProgramCacheKey=()=> `ecorchee-hairs-coverage-v5-${encoded}`;
   const mesh=new T.Mesh(geo,m);mesh.name=`poils_${part.id}`;mesh.renderOrder=1003;mesh.userData.fullRange=range;mesh.userData.indicesPerHair=indicesPerHair;
-  if(encoded)mesh.onBeforeRender=renderer=>{renderer.getCurrentViewport(renderViewport);viewport.set(renderViewport.z,renderViewport.w);};
+  if(encoded)mesh.onBeforeRender=renderer=>{
+    renderer.getCurrentViewport(renderViewport);viewport.set(renderViewport.z,renderViewport.w);
+    // Preserve the approved CSS-space thickness as render density increases.
+    minimumHalf.value=.3*Math.max(1,renderer.getPixelRatio());
+  };
   return mesh;
 }
 export function setShellCount(mesh,count){
@@ -166,7 +191,7 @@ export function setShellCount(mesh,count){
 }
 
 // Sparse short guard hairs sampled once from the supplied skin; no model asset is changed.
-// They replace the visible shell strata in close-up, and disappear when smaller than a pixel.
+// Their distance fade is continuous coverage in the shader; the submitted range stays fixed.
 export function shortHairs(geometry,part,plane,focus,comb,mobile){
   const pos=geometry.getAttribute('position'),norm=geometry.getAttribute('normal'),col=geometry.getAttribute('color'),index=geometry.index;
   const triangles=(index?index.count:pos.count)/3,areas=new Float32Array(triangles);
@@ -177,16 +202,21 @@ export function shortHairs(geometry,part,plane,focus,comb,mobile){
   }
   const count=Math.min(mobile?18000:30000,Math.round(area*(mobile?850:16000))),vertices=count*5;
   const values=Object.fromEntries(['position','normal','color','fibreTangent'].map(k=>[k,new Float32Array(vertices*3)]));
-  const heights=new Float32Array(vertices),sides=new Float32Array(vertices),indices=new Uint32Array(count*9);
+  const heights=new Float32Array(vertices),sides=new Float32Array(vertices),ranks=new Float32Array(vertices),indices=new Uint32Array(count*9);
   let seed=part.id.split('').reduce((s,c)=>Math.imul(s,31)+c.charCodeAt(0),173)>>>0;
   const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
   const root=new T.Vector3(),n=new T.Vector3(),d=new T.Vector3(),across=new T.Vector3(),v=new T.Vector3(),color=new T.Vector3();
+  const pattern=[0,1,2,1,3,2,2,3,4];
+  const put=(buffer,vertex,value)=>{const i=vertex*3;buffer[i]=value.x;buffer[i+1]=value.y;buffer[i+2]=value.z;};
   for(let h=0;h<count;h++){
     const sample=random()*area;let low=0,high=triangles-1;
     while(low<high){const mid=(low+high)>>>1;if(areas[mid]<sample)low=mid+1;else high=mid;}
-    const ids=[0,1,2].map(j=>index?index.getX(low*3+j):low*3+j),r=Math.sqrt(random()),w=[1-r,r*(1-random()),0];w[2]=1-w[0]-w[1];
+    const r=Math.sqrt(random()),w0=1-r,w1=r*(1-random()),w2=1-w0-w1;
     root.set(0,0,0);n.set(0,0,0);color.set(0,0,0);
-    for(let j=0;j<3;j++){root.addScaledVector(v.fromBufferAttribute(pos,ids[j]),w[j]);n.addScaledVector(v.fromBufferAttribute(norm,ids[j]),w[j]);color.addScaledVector(v.fromBufferAttribute(col,ids[j]),w[j]);}
+    for(let j=0;j<3;j++){
+      const id=index?index.getX(low*3+j):low*3+j,w=j===0?w0:j===1?w1:w2;
+      root.addScaledVector(v.fromBufferAttribute(pos,id),w);n.addScaledVector(v.fromBufferAttribute(norm,id),w);color.addScaledVector(v.fromBufferAttribute(col,id),w);
+    }
     n.normalize();d.copy(comb).addScaledVector(n,-comb.dot(n)).normalize().multiplyScalar(.65).addScaledVector(n,.7).normalize();
     across.crossVectors(n,d);if(across.lengthSq()<.001)across.crossVectors(n,new T.Vector3(1,.2,.1));across.normalize();
     d.addScaledVector(across,(random()-.5)*.65).normalize();
@@ -194,21 +224,37 @@ export function shortHairs(geometry,part,plane,focus,comb,mobile){
     root.addScaledVector(n,.0005);
     for(let j=0;j<5;j++){
       const vertex=h*5+j,height=j<2?0:j<4?.52:1,side=j===4?0:j%2?1:-1;
+      ranks[vertex]=(h+.5)/count;
       v.copy(root).addScaledVector(d,length*height).addScaledVector(comb,length*height*height*.18).addScaledVector(across,side*width*(1-height*.75));
-      values.position.set(v.toArray(),vertex*3);values.normal.set(n.toArray(),vertex*3);values.color.set(color.toArray(),vertex*3);values.fibreTangent.set(d.toArray(),vertex*3);heights[vertex]=height;sides[vertex]=side;
+      put(values.position,vertex,v);put(values.normal,vertex,n);put(values.color,vertex,color);put(values.fibreTangent,vertex,d);heights[vertex]=height;sides[vertex]=side;
     }
-    for(let j=0;j<9;j++)indices[h*9+j]=h*5+[0,1,2,1,3,2,2,3,4][j];
+    for(let j=0;j<9;j++)indices[h*9+j]=h*5+pattern[j];
   }
   const attributes=Object.fromEntries(Object.entries(values).map(([k,a])=>[k,new T.BufferAttribute(a,3)]));
   attributes.fibreHeight=new T.BufferAttribute(heights,1);attributes.fibreSide=new T.BufferAttribute(sides,1);
+  attributes.fibreRank=new T.BufferAttribute(ranks,1);
   // This procedural short duvet has its own small topology, independent of the binary format.
   const mesh=hairs({attributes,index:new T.BufferAttribute(indices,1),indicesPerHair:indices.length/count},[0,count],part,plane,focus,1,false);
   mesh.name=`duvet_${part.id}`;mesh.userData.batch='duvet';
+  // These small per-part coats belong to the same assembled specimen. Keep their
+  // submission stable as a bounding box grazes the screen edge while rotating.
+  mesh.frustumCulled=false;
+  const amount={value:0},compile=mesh.material.onBeforeCompile;
+  mesh.material.onBeforeCompile=shader=>{
+    compile(shader);shader.uniforms.uDuvetAmount=amount;
+    shader.vertexShader='attribute float fibreRank;varying float vFibreRank;\n'+shader.vertexShader;
+    shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\nvFibreRank=fibreRank;');
+    shader.fragmentShader='uniform float uDuvetAmount;varying float vFibreRank;\n'+shader.fragmentShader;
+    shader.fragmentShader=shader.fragmentShader.replace('#include <clipping_planes_fragment>',`#include <clipping_planes_fragment>
+      if(uDuvetAmount<=0.0)discard;`);
+    shader.fragmentShader=shader.fragmentShader.replace('#include <alphatest_fragment>',`diffuseColor.a*=smoothstep(vFibreRank-.025,vFibreRank+.025,uDuvetAmount);
+      #include <alphatest_fragment>`);
+  };
+  mesh.material.customProgramCacheKey=()=> 'ecorchee-duvet-stable-v1';
   const center=new T.Vector3(...part.centre),worldCenter=new T.Vector3();
   mesh.onBeforeRender=(_renderer,_scene,camera)=>{
     worldCenter.copy(center).applyMatrix4(mesh.matrixWorld);
-    const amount=1-T.MathUtils.smoothstep(camera.position.distanceTo(worldCenter),2.5,6);
-    mesh.geometry.setDrawRange(0,Math.floor(count*amount)*9);
+    amount.value=1-T.MathUtils.smoothstep(camera.position.distanceTo(worldCenter),2.5,6);
   };
   return mesh;
 }

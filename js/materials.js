@@ -34,7 +34,7 @@ export function focusPatch(shader,focus){
 }
 export function physical(part,plane,maps,focus){
   const [roughness,clearcoat]=recipes[part.mat]||recipes.organe;
-  const m=new T.MeshPhysicalMaterial({vertexColors:true,roughness,clearcoat,clearcoatRoughness:.24,clippingPlanes:[plane],clipShadows:true,side:T.DoubleSide});
+  const m=new T.MeshPhysicalMaterial({vertexColors:true,roughness,clearcoat,clearcoatRoughness:.24,alphaToCoverage:true,clippingPlanes:[plane],clipShadows:true,side:T.DoubleSide});
   m.name=part.id;
   const tissue=!['cuticule','griffe','oeil'].includes(part.mat);
   if(part.mat==='cuticule'){m.normalMap=maps.cuticule;m.normalScale.set(.36,.36);m.clearcoatRoughness=.2;}

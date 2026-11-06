@@ -12,21 +12,24 @@ import {GestureRenderer} from './gesture-renderer.js';
 const $=id=>document.getElementById(id),canvas=$('scene');
 const reduce=matchMedia('(prefers-reduced-motion: reduce)');
 const mobile=matchMedia('(pointer: coarse)').matches||innerWidth<700;
-let renderer,progressValue=0;
+let renderer,progressValue=0,contextLost=false;
 function progress(value){progressValue=Math.max(progressValue,value);$('loading-percent').textContent=`${Math.round(progressValue)} %`;$('loading-bar').style.width=`${progressValue}%`;}
 function fallback(error){
   renderer?.setAnimationLoop(null);$('loading').classList.add('done');$('fallback').hidden=false;
-  $('fallback-message').textContent='La vue 3D ne peut pas s’ouvrir. Vérifie que la page passe par le lanceur local, puis réessaie.';
+  $('fallback-message').textContent=contextLost?'La vue 3D a été interrompue. Touche Réessayer pour la recharger.':'La vue 3D ne peut pas s’ouvrir. Vérifie que la page passe par le lanceur local, puis réessaie.';
   $('instrument').inert=true;$('atlas-toggle').disabled=true;
-  if(error)console.error(error);
+  if(error&&!contextLost)console.error(error);
 }
 $('retry').addEventListener('click',()=>location.reload());
-canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();fallback();});
+canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();contextLost=true;fallback();});
+// Keep the still image and retry action after restoration. Rebuilding the entire
+// specimen automatically could immediately repeat the same memory-pressure loss.
+canvas.addEventListener('webglcontextrestored',()=>{if(contextLost)fallback();});
 
 try{
   // Test first: no asset downloads or broken controls when WebGL2 is unavailable.
   const context=canvas.getContext('webgl2',{antialias:true,stencil:true,alpha:false,powerPreference:'high-performance'});
-  if(!context){fallback();}else{
+  if(!context||!context.getContextAttributes().antialias||context.getParameter(context.SAMPLES)<2){fallback();}else{
     const manager=new T.LoadingManager();progress(3);
     const world=await studio(canvas,manager);renderer=world.renderer;
     const debug=context.getExtension('WEBGL_debug_renderer_info');
@@ -57,10 +60,37 @@ try{
       sections.update(true,axis,0,null,true);renderer.render(world.scene,world.camera);
     }
     anatomy.update(1/60,performance.now(),reduce.matches);batches.update(anatomy);
-    renderer.shadowMap.needsUpdate=true;renderer.render(world.scene,world.camera);progress(100);$('loading').classList.add('done');
+    const calibrationPose={theta:rig.theta,phi:rig.phi,radius:rig.radius,look:rig.look.clone(),target:{...rig.target},lookTarget:rig.lookTarget.clone(),offset:rig.offset,offsetX:rig.offsetX,framing:rig.framing};
+    // An absolutely opaque veil lets Chromium stop compositing the canvas and queue
+    // hidden GPU work. Keep it in the real frame pipeline (visually still opaque).
+    $('loading').style.opacity='.999';
+    await quality.calibrate((mode,phase)=>{
+      // Representative moving views, including section rebuilding during scalpel motion.
+      // Exercise the ENTIRE scalpel travel, including the outer-leg slices.
+      // Starting at 20% left first-use buffer/driver work for the first real cut.
+      anatomy.interacting=true;anatomy.state.cut=mode===0?0:mode===1?.5:.001+.998*phase;
+      anatomy.update(1/60,performance.now(),true);batches.update(anatomy);
+      // A rightward drag decreases theta. Probe the same faces as real gestures.
+      rig.target.theta=(mode===0?.32:Math.PI/2)-(mode===2?0:phase*3);
+      rig.target.phi=mode===0?1.27:1.31;rig.target.radius=mode===0?calibrationPose.target.radius:mobile?15.8:8.2;
+      rig.framing=mode===0?calibrationPose.framing:{x:0,y:mobile?.09:.035};
+      if(mode===0)rig.lookTarget.copy(calibrationPose.lookTarget);else rig.lookTarget.set(0,.7,-.25);
+      if(mode!==2){rig.theta=rig.target.theta;rig.phi=rig.target.phi;rig.radius=rig.target.radius;}
+      else if(phase===0){
+        // Include the combined camera move + first incision in the load probe.
+        rig.theta=calibrationPose.theta;rig.phi=calibrationPose.phi;rig.radius=calibrationPose.radius;
+        rig.look.copy(calibrationPose.look);rig.offset=calibrationPose.offset;rig.offsetX=calibrationPose.offsetX;
+      }
+      rig.update(1/60,0,true,false);drawing.draw();
+    });
+    Object.assign(rig,calibrationPose);anatomy.state.cut=0;anatomy.interacting=false;
+    rig.update(1/60,0,reduce.matches,false);
+    anatomy.update(1/60,performance.now(),reduce.matches);batches.update(anatomy);
+    renderer.shadowMap.needsUpdate=true;drawing.draw();progress(100);$('loading').style.removeProperty('opacity');$('loading').classList.add('done');
     let previous=performance.now(),shadowCut=anatomy.coordinate,shadowSpread=0,shadowSelected=null,shadowIsolated=false,shadowUpdates=1;
     addEventListener('resize',()=>{if(!anatomy.selected){if(anatomy.exploded)rig.spreadFrame();else if(anatomy.state.cut>.001)rig.section(anatomy.axis);else rig.frame();}});
     renderer.setAnimationLoop(now=>{
+      if(contextLost)return;
       const elapsed=now-previous,dt=Math.max(.001,elapsed/1000);previous=now;
       if(document.hidden)return;
       quality.beginFrame(now,dt);anatomy.interacting=quality.interacting;
@@ -77,7 +107,7 @@ try{
       drawing.draw(quality.detail);quality.update(elapsed,now,dt);
     });
     // Read-only diagnostics used by the repeatable local browser checks.
-    window.ecorchee={snapshot:()=>({ready:true,parts:parts.length,axis:anatomy.axis,cut:anatomy.state.cut,coordinate:anatomy.coordinate,spread:anatomy.state.spread,selected:anatomy.selected?.data.id||null,isolated:anatomy.isolated,groundOpacity:world.ground.material.opacity,palier:quality.level,fps:quality.fps,loadedB,gpu,integrated,gesture:quality.interacting,detail:quality.detail,batched:batches.root.visible,shadowUpdates,visible:parts.filter(p=>p.group.visible).map(p=>p.data.id),sections:sections.entries.filter(e=>sections.root.visible&&e.group.visible).length,render:{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles},camera:{theta:rig.theta,phi:rig.phi,radius:rig.radius},selectedScreen:anatomy.selected?screenPoint(anatomy.selected):null}),
+    window.ecorchee={snapshot:()=>({ready:true,parts:parts.length,axis:anatomy.axis,cut:anatomy.state.cut,coordinate:anatomy.coordinate,spread:anatomy.state.spread,selected:anatomy.selected?.data.id||null,isolated:anatomy.isolated,groundOpacity:world.ground.material.opacity,palier:quality.level,fps:quality.fps,qualityLocked:quality.locked,calibration:quality.calibration,buffers:quality.buffers(),loadedB,gpu,integrated,gesture:quality.interacting,detail:quality.detail,batched:batches.root.visible,shadowUpdates,visible:parts.filter(p=>p.group.visible).map(p=>p.data.id),sections:sections.entries.filter(e=>sections.root.visible&&e.group.visible).length,render:{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles},camera:{theta:rig.theta,phi:rig.phi,radius:rig.radius},selectedScreen:anatomy.selected?screenPoint(anatomy.selected):null}),
       catalogue:()=>data.parties.map(p=>p.id),
       coat:()=>parts.filter(p=>p.shell).map(p=>({id:p.data.id,layers:p.shell.geometry.instanceCount,hairs:p.hairs.map(h=>{
         const position=h.geometry.getAttribute('position'),normal=h.geometry.getAttribute('normal'),first=h.userData.fullRange[0]*data.poils.sommets_par_poil;

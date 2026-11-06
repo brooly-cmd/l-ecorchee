@@ -35,7 +35,7 @@ export async function loadModel(scene,plane,maps,manager,mobile,progress){
       const core=eyeCore(geometry),material=physical(d,plane,maps,focus);
       material.color.set('#241811');material.roughness=.3;material.clearcoat=.05;
       const inner=new T.Mesh(core,material);inner.renderOrder=1000;group.add(inner);
-      body.material.transparent=true;body.material.depthWrite=false;body.material.opacity=.55;body.material.envMapIntensity=1.45;body.renderOrder=1001;
+      body.material.transparent=true;body.material.alphaToCoverage=false;body.material.depthWrite=false;body.material.opacity=.55;body.material.envMapIntensity=1.45;body.renderOrder=1001;
     }
     const part={data:d,index,group,body,focus,center:new T.Vector3(...d.centre),offset:new T.Vector3(),shell:null,hairs:[],presence:1};
     body.userData.part=part;
@@ -47,7 +47,11 @@ export async function loadModel(scene,plane,maps,manager,mobile,progress){
       if(range)for(let h=0;h<range[1];h+=Math.max(1,Math.floor(range[1]/400))){const j=(range[0]+h)*a.verticesPerHair;comb.x+=tangent.getX(j);comb.y+=tangent.getY(j);comb.z+=tangent.getZ(j);}
       if(comb.lengthSq()<.0001)comb.set(.13,-1,-.28);comb.normalize();
       skinGeometry.computeBoundingSphere();part.shell=shells(skinGeometry,d,plane,focus,comb);group.add(part.shell);
-      const duvet=shortHairs(skinGeometry,d,plane,focus,comb,mobile);group.add(duvet);part.hairs.push(duvet);
+      // The measured A-only ladder never displays the close-up duvet (levels >= 2).
+      // Avoid building thousands of invisible fibres and retaining their buffers.
+      if(useB||(forced!==null&&Number(forced)<2)){
+        const duvet=shortHairs(skinGeometry,d,plane,focus,comb,mobile);group.add(duvet);part.hairs.push(duvet);
+      }
     }
     for(const [key,shared] of [['a',a],['b',b]]){
       const range=data.poils.table[key]?.[d.id];
